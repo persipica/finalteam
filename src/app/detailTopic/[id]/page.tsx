@@ -106,7 +106,7 @@ export default function TopicDetailPage() {
     const incrementViews = async () => {
       try {
         const res = await fetch(`/api/topics/${id}/increment-views`, {
-          method: 'PATCH',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },

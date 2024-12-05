@@ -6,7 +6,7 @@ const incrementViews = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query
   const { userEmail } = req.body
 
-  if (req.method !== 'PATCH') {
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
