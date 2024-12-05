@@ -28,7 +28,7 @@ export default function TopicLists() {
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   // 인기 상품 슬라이드를 위한 상태
-  const [popularTopics, setPopularTopics] = useState<Topic[]>([])
+  const [popularTopics] = useState<Topic[]>([])
 
   // 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
