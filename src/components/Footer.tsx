@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
                 <ul className="list-unstyled">
                   <li>
                     <Link
-                      href="/"
+                      href="/team"
                       className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                     >
                       About Us
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
                 <ul className="list-unstyled">
                   <li>
                     <Link
-                      href="/"
+                      href="/contact"
                       className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                     >
                       Contact Us

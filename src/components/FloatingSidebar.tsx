@@ -81,7 +81,7 @@ export default function FloatingSidebar() {
           )}
           <li>
             <Link
-              href="/aboutus"
+              href="/team"
               className="flex items-center gap-4 text-gray-700 hover:text-blue-500 transition-colors"
             >
               <div className="min-w-[24px]">
