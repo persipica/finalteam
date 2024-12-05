@@ -150,7 +150,7 @@ export default function TopicLists() {
       {popularTopics.length > 0 && (
         <div className="relative mb-6">
           <h2 className="text-2xl font-bold mb-4">인기 상품</h2>
-          <div className="flex items-center">
+          <div className="relative w-full">
             {/* 왼쪽 화살표 */}
             <button
               onClick={handlePrevSlide}
@@ -160,15 +160,15 @@ export default function TopicLists() {
             </button>
 
             {/* 슬라이드 컨텐츠 (한 슬라이드에 한 상품만 표시) */}
-            <div className="flex overflow-hidden">
+            <div className="overflow-hidden">
               <div
-                className="flex transition-transform duration-300"
+                className="flex transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {popularTopics.map((topic) => (
                   <div
                     key={topic._id}
-                    className="w-full p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg mr-4"
+                    className="w-full flex-shrink-0 p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg mr-4"
                   >
                     <div className="relative h-48 w-full mb-4">
                       <Image
