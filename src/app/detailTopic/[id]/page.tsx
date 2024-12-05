@@ -123,13 +123,16 @@ export default function TopicDetailPage() {
     incrementViews()
 
     // 상품 정보 가져오기
+
     const fetchTopic = async () => {
       try {
-        const res = await fetch(`/api/topics/${id}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userEmail }),
-        })
+        const res = await fetch(
+          `/api/topics/${id}?userEmail=${encodeURIComponent(userEmail)}`,
+          {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          }
+        )
         if (!res.ok) throw new Error('Failed to fetch topic')
         const data = await res.json()
         setTopic(data)
