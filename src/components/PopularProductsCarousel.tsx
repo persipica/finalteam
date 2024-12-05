@@ -88,8 +88,8 @@ export default function PopularProductsCarousel({
                   />
                 </div>
                 <h3 className="text-xl font-semibold mt-4">{product.title}</h3>
-                <p className="text-lg font-bold text-blue-600">
-                  {product.price}원
+                <p className="mt-2 text-lg font-bold text-blue-600">
+                  {product.price.toLocaleString()} 원
                 </p>
                 <p className="text-sm text-gray-500">조회수: {product.views}</p>
               </div>
