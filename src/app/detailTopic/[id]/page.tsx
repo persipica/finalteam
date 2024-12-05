@@ -272,7 +272,7 @@ export default function TopicDetailPage() {
             <HiPencilAlt className="mr-2" />
             수정하기
           </Link>
-          <RemoveBtn id={topic._id} />
+          <RemoveBtn id={topic._id} title={topic.title} />
         </div>
       )}
 
