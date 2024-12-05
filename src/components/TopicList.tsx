@@ -21,11 +21,10 @@ export default function TopicLists() {
   const [error, setError] = useState<string | null>(null)
 
   const [selectedCategory, setSelectedCategory] = useState<string>('')
-  const [priceSortOrder, setPriceSortOrder] = useState<string>('asc')
+  const [priceSortOrder, setPriceSortOrder] = useState<string | null>(null)
   const [dateSortOrder, setDateSortOrder] = useState<string>('desc')
   const [searchQuery, setSearchQuery] = useState<string>('')
 
-  // 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
   const itemsPerPage = 8 // 한 페이지에 표시할 상품 개수
 
@@ -62,49 +61,40 @@ export default function TopicLists() {
       return true
     })
     .sort((a, b) => {
-      if (priceSortOrder === 'asc') {
-        return a.price - b.price
-      } else if (priceSortOrder === 'desc') {
-        return b.price - a.price
+      // 날짜 정렬 처리
+      if (dateSortOrder) {
+        if (dateSortOrder === 'desc') {
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        } else {
+          return (
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          )
+        }
       }
-      if (dateSortOrder === 'desc') {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      } else {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+
+      // 가격 정렬 처리
+      if (priceSortOrder) {
+        if (priceSortOrder === 'asc') {
+          return a.price - b.price
+        } else {
+          return b.price - a.price
+        }
       }
+
+      // 기본 정렬 (날짜 최신순)
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
 
-  // 페이지네이션에 따른 데이터 분리
-  const totalItems = filteredTopics.length // 필터링된 총 상품 개수
-  const totalPages = Math.ceil(totalItems / itemsPerPage) // 전체 페이지 수 계산
-  const startIndex = (currentPage - 1) * itemsPerPage // 현재 페이지의 시작 인덱스
-  const endIndex = startIndex + itemsPerPage // 현재 페이지의 끝 인덱스
-  const paginatedTopics = filteredTopics.slice(startIndex, endIndex) // 현재 페이지에 해당하는 상품 목록
+  const totalItems = filteredTopics.length
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const paginatedTopics = filteredTopics.slice(startIndex, endIndex)
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
-  }
-
-  function getRelativeTime(createdAt: string) {
-    const now = new Date()
-    const createdTime = new Date(createdAt)
-    const diffInSeconds = Math.floor(
-      (now.getTime() - createdTime.getTime()) / 1000
-    )
-
-    if (diffInSeconds < 60) {
-      return `${diffInSeconds}초 전`
-    }
-    const diffInMinutes = Math.floor(diffInSeconds / 60)
-    if (diffInMinutes < 60) {
-      return `${diffInMinutes}분 전`
-    }
-    const diffInHours = Math.floor(diffInMinutes / 60)
-    if (diffInHours < 24) {
-      return `${diffInHours}시간 전`
-    }
-    const diffInDays = Math.floor(diffInHours / 24)
-    return `${diffInDays}일 전`
   }
 
   if (loading)
@@ -150,10 +140,14 @@ export default function TopicLists() {
           </label>
           <select
             id="priceSort"
-            value={priceSortOrder}
-            onChange={(e) => setPriceSortOrder(e.target.value)}
+            value={priceSortOrder || ''}
+            onChange={(e) => {
+              setPriceSortOrder(e.target.value)
+              setDateSortOrder('') // 날짜 정렬 초기화
+            }}
             className="border border-gray-300 rounded-md p-2"
           >
+            <option value="">정렬 안 함</option>
             <option value="asc">가격 낮은순</option>
             <option value="desc">가격 높은순</option>
           </select>
@@ -167,7 +161,7 @@ export default function TopicLists() {
             id="dateSort"
             value={dateSortOrder}
             onChange={(e) => {
-              setDateSortOrder(e.target.value) // 날짜 정렬 설정
+              setDateSortOrder(e.target.value)
               setPriceSortOrder('') // 가격 정렬 초기화
             }}
             className="border border-gray-300 rounded-md p-2"
@@ -209,9 +203,6 @@ export default function TopicLists() {
               </div>
               <h3 className="text-lg font-bold text-gray-800 truncate">
                 {topic.title}
-                <span className="text-sm text-gray-500 ml-2">
-                  ({getRelativeTime(topic.createdAt)})
-                </span>
               </h3>
               <p className="text-sm text-gray-600 mt-2 truncate">
                 {topic.description}
