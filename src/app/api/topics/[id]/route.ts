@@ -50,6 +50,53 @@ export const GET = async (
   }
 }
 
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await connectMongoDB()
+    const { id } = params
+    const { userEmail } = await req.json()
+
+    if (!userEmail) {
+      return NextResponse.json(
+        { message: '사용자 이메일이 필요합니다.' },
+        { status: 400 }
+      )
+    }
+
+    const topic = await Topic.findById(id)
+    if (!topic) {
+      return NextResponse.json(
+        { message: '상품을 찾을 수 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    // 이미 조회한 사용자인지 확인
+    const existingView = await View.findOne({ topicId: id, userEmail })
+    if (!existingView) {
+      // 조회수 증가 및 조회 기록 저장
+      topic.views = (topic.views || 0) + 1
+      await topic.save()
+
+      await View.create({ topicId: id, userEmail })
+    }
+
+    return NextResponse.json(
+      { message: '조회수가 성공적으로 증가했습니다.', views: topic.views },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error('Error in PATCH /api/topics/:id:', error)
+    return NextResponse.json(
+      { message: '조회수 증가 중 오류 발생' },
+      { status: 500 }
+    )
+  }
+}
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
