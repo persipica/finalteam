@@ -8,19 +8,23 @@ interface ITopic {
   image?: string
   userEmail: string // 상품을 올린 사용자의 이메일 추가
   category: string // 카테고리 추가
+  createdAt?: Date // 자동 생성되는 필드
+  updatedAt?: Date // 자동 생성되는 필드
 }
 
-const topicSchema = new Schema<ITopic>({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  image: { type: String },
-  userEmail: { type: String, required: true }, // 상품 등록자의 이메일
-  category: {
-    type: String,
-    required: true,
+const topicSchema = new Schema<ITopic>(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+    image: { type: String },
+    userEmail: { type: String, required: true },
+    category: { type: String, required: true },
   },
-})
+  {
+    timestamps: true, // createdAt과 updatedAt 필드 자동 추가
+  }
+)
 
 let Topic: Model<ITopic>
 try {
