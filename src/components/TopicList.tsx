@@ -241,10 +241,17 @@ export default function TopicLists() {
                       {topic.title}
                     </h3>{' '}
                     {/* 제목 글씨 크기: 큰글씨 */}
-                    <p className="text-base text-black mt-1 truncate">
+                    <p
+                      className="text-base text-black mt-1 truncate"
+                      style={{
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
                       {topic.description}
                     </p>{' '}
-                    {/* 설명 글씨 크기: 중간글씨 */}
+                    {/* 설명 글씨 크기: 중간글씨, 설명이 길면 ...으로 생략 */}
                     <p className="text-sm text-gray-500 mt-2">
                       {topic.category}
                     </p>{' '}
