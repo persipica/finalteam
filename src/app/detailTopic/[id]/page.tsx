@@ -102,6 +102,8 @@ export default function TopicDetailPage() {
   useEffect(() => {
     if (!id || !userEmail) return // id와 userEmail이 모두 필요하므로 한 번만 체크
 
+    console.log('id:', id, 'userEmail:', userEmail) // 로그 추가
+
     // 조회수 증가
     const incrementViews = async (id: string, userEmail: string) => {
       try {
@@ -122,32 +124,8 @@ export default function TopicDetailPage() {
       }
     }
 
-    // 예시로 호출
     incrementViews(id, userEmail)
-
-    // 상품 정보 가져오기
-
-    const fetchTopic = async () => {
-      try {
-        const res = await fetch(
-          `/api/topics/${id}?userEmail=${encodeURIComponent(userEmail)}`,
-          {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          }
-        )
-        if (!res.ok) throw new Error('Failed to fetch topic')
-        const data = await res.json()
-        setTopic(data)
-      } catch (error) {
-        console.error('Error fetching topic:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchTopic()
-  }, [id, userEmail])
+  }, [id, userEmail]) // dependency 배열을 추가하여 id, userEmail이 바뀔 때마다 실행
 
   const handleImageClick = (image: string) => {
     setModalImage(image)
