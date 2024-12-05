@@ -175,7 +175,7 @@ export default function TopicLists() {
                 {popularTopics.map((topic) => (
                   <div
                     key={topic._id}
-                    className="w-75% ml-10 flex-shrink-0 p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg"
+                    className="w-90% ml-50 flex-shrink-0 p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg"
                   >
                     <div className="relative h-64 w-full mb-4">
                       <Image
