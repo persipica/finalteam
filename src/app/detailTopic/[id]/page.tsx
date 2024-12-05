@@ -47,12 +47,22 @@ export default function TopicDetailPage() {
 
     const fetchTopic = async () => {
       try {
-        const res = await fetch(`/api/topics/${id}`)
+        const res = await fetch(`/api/topics/${id}`, {
+          method: 'GET',
+          headers: {
+            'x-user-email': userEmail || '', // userEmail을 헤더에 포함
+          },
+        })
         if (!res.ok) throw new Error('Failed to fetch topic')
         const data = await res.json()
         setTopic(data)
 
-        const commentRes = await fetch(`/api/comments?topicId=${id}`)
+        const commentRes = await fetch(`/api/comments?topicId=${id}`, {
+          method: 'GET',
+          headers: {
+            'x-user-email': userEmail || '', // 동일하게 댓글 요청에도 헤더 추가
+          },
+        })
         if (!commentRes.ok) throw new Error('Failed to fetch comments')
         const { comments, sellerEmail } = await commentRes.json()
         setComments(
