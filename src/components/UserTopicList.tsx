@@ -91,7 +91,7 @@ export default function TopicLists() {
 
   return (
     <div className="container mx-auto my-8">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
         {topics.map((topic: Topic) => (
           <div
             key={topic._id}
