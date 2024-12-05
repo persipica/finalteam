@@ -100,8 +100,9 @@ export default function TopicDetailPage() {
   }, [id, userEmail])
 
   useEffect(() => {
-    if (!id || !userEmail) return
+    if (!id || !userEmail) return // id와 userEmail이 모두 필요하므로 한 번만 체크
 
+    // 조회수 증가
     const incrementViews = async () => {
       try {
         const res = await fetch(`/api/topics/${id}/increment-views`, {
@@ -120,11 +121,8 @@ export default function TopicDetailPage() {
     }
 
     incrementViews()
-  }, [id, userEmail])
 
-  useEffect(() => {
-    if (!id || !userEmail) return
-
+    // 상품 정보 가져오기
     const fetchTopic = async () => {
       try {
         const res = await fetch(`/api/topics/${id}`, {

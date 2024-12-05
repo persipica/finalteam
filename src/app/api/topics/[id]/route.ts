@@ -50,10 +50,10 @@ export const GET = async (
   }
 }
 
-export async function PATCH(
+export const PATCH = async (
   req: NextRequest,
   { params }: { params: { id: string } }
-) {
+) => {
   try {
     await connectMongoDB()
     const { id } = params
@@ -82,6 +82,9 @@ export async function PATCH(
       await topic.save()
 
       await View.create({ topicId: id, userEmail })
+      console.log(`조회수 증가: ${topic.views}, 사용자: ${userEmail}`)
+    } else {
+      console.log(`조회수 증가 건너뜀 (이미 조회됨): 사용자 ${userEmail}`)
     }
 
     return NextResponse.json(
@@ -89,7 +92,7 @@ export async function PATCH(
       { status: 200 }
     )
   } catch (error) {
-    console.error('Error in PATCH /api/topics/:id:', error)
+    console.error('조회수 증가 중 오류 발생:', error)
     return NextResponse.json(
       { message: '조회수 증가 중 오류 발생' },
       { status: 500 }
