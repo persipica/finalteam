@@ -2,17 +2,12 @@ import Topic from '@/models/topic'
 import TopicList from '@/components/TopicList'
 
 import connectMongoDB from '@/libs/mongodb'
-import Link from 'next/link'
 
 export default async function Home() {
   try {
     await connectMongoDB()
 
     const topics = await Topic.find().sort({ price: -1 }).limit(5)
-
-    const popularTopics = [...topics]
-      .sort((a, b) => (b.views || 0) - (a.views || 0)) // 조회수 기준 정렬
-      .slice(0, 5) // 상위 5개
 
     return (
       <div>
@@ -43,22 +38,6 @@ export default async function Home() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* 인기 상품 캐러셀 */}
-        <div className="popular-topics mb-6">
-          <h2 className="text-xl font-bold mb-4">인기 상품</h2>
-          <ul>
-            {popularTopics.map((topic) => (
-              <li key={topic._id.toString()}>
-                <Link href={`/detailTopic/${topic._id.toString()}`}>
-                  <a className="text-blue-500">
-                    {topic.title} (조회수: {topic.views || 0})
-                  </a>
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
 
         <TopicList />

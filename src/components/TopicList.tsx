@@ -26,6 +26,9 @@ export default function TopicLists() {
   const [dateSortOrder, setDateSortOrder] = useState<string>('desc')
   const [searchQuery, setSearchQuery] = useState<string>('')
 
+  // 인기 상품 슬라이드를 위한 상태
+  const [popularTopics, setPopularTopics] = useState<Topic[]>([])
+  const [currentSlide, setCurrentSlide] = useState<number>(0)
   // 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
   const itemsPerPage = 8 // 한 페이지에 표시할 상품 개수
@@ -39,6 +42,13 @@ export default function TopicLists() {
         }
         const data = await res.json()
         setTopics(data.topics)
+
+        // 인기 상품 조회수 기준으로 정렬 후 상위 5개 선택
+        const sortedTopics = data.topics
+          .sort((a: Topic, b: Topic) => (b.views || 0) - (a.views || 0))
+          .slice(0, 5)
+
+        setPopularTopics(sortedTopics)
       } catch (error) {
         console.error('Error loading topics: ', error)
         setError('Failed to load topics')
@@ -48,6 +58,18 @@ export default function TopicLists() {
     }
     fetchTopics()
   }, [])
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === 0 ? popularTopics.length - 1 : prev - 1
+    )
+  }
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === popularTopics.length - 1 ? 0 : prev + 1
+    )
+  }
 
   const filteredTopics = topics
     .filter((topic) => {
@@ -124,6 +146,74 @@ export default function TopicLists() {
 
   return (
     <div className="container mx-auto my-8">
+      {/* 인기 상품 슬라이드 */}
+      {popularTopics.length > 0 && (
+        <div className="relative mb-6">
+          <h2 className="text-2xl font-bold mb-4">인기 상품</h2>
+          <div className="flex items-center">
+            {/* 왼쪽 화살표 */}
+            <button
+              onClick={handlePrevSlide}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+            >
+              <span className="text-xl">&#8592;</span>
+            </button>
+
+            {/* 슬라이드 컨텐츠 */}
+            <div className="flex overflow-hidden">
+              <div
+                className="flex transition-transform duration-300"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {popularTopics.map((topic) => (
+                  <div
+                    key={topic._id}
+                    className="w-full p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg mr-4"
+                  >
+                    <div className="relative h-48 w-full mb-4">
+                      <Image
+                        src={topic.image || '/default-avatar.png'}
+                        alt={topic.title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-md"
+                      />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800 truncate">
+                      {topic.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-2 truncate">
+                      {topic.description}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-2">
+                      {topic.category}
+                    </p>
+                    <h3 className="text-lg font-bold text-gray-800 mt-4">
+                      {topic.price}원
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      조회수: {topic.views}
+                    </p>
+                    <Link href={`/detailTopic/${topic._id}`} passHref>
+                      <button className="text-blue-600 mt-4">
+                        자세히 보기
+                      </button>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 오른쪽 화살표 */}
+            <button
+              onClick={handleNextSlide}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+            >
+              <span className="text-xl">&#8594;</span>
+            </button>
+          </div>
+        </div>
+      )}
       {/* 필터, 정렬 UI */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <div>
