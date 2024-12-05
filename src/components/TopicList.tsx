@@ -43,13 +43,6 @@ export default function TopicLists() {
         }
         const data = await res.json()
         setTopics(data.topics)
-
-        // 인기 상품 조회수 기준으로 정렬 후 상위 5개 선택
-        const sortedTopics = data.topics
-          .sort((a: Topic, b: Topic) => (b.views || 0) - (a.views || 0))
-          .slice(0, 5)
-
-        setPopularTopics(sortedTopics)
       } catch (error) {
         console.error('Error loading topics: ', error)
         setError('Failed to load topics')
@@ -239,6 +232,13 @@ export default function TopicLists() {
                   <p className="text-sm text-gray-600">
                     {getRelativeTime(topic.createdAt)}
                   </p>
+                  <h3 className="text-sm text-gray-500 mt-2">
+                    조회수: {topic.views}
+                  </h3>
+                  <p className="text-sm text-gray-600 mt-2 truncate">
+                    {topic.description}
+                  </p>
+                  <p className="text-sm text-gray-500 mt-2">{topic.category}</p>
                   <p className="mt-2 text-xl font-bold">
                     {topic.price.toLocaleString()} 원
                   </p>
