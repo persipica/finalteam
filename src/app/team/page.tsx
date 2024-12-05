@@ -22,10 +22,10 @@ type TeamMember = {
 const teamMembers: TeamMember[] = [
   {
     name: '강희수',
-    role: '팀장',
+    role: '프로젝트 전반 제작',
     bio: '프로젝트 전반 제작',
     image: '/team1.png', // public 폴더 내의 이미지 경로
-    email: 'hong@example.com',
+    email: 'studyharder11@gmail.com',
     social: {
       github: 'https://github.com/persipica',
       linkedin: 'https://www.linkedin.com/in/honggildong',
@@ -34,7 +34,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '임건희',
-    role: '조원',
+    role: '사이드바 제작',
     bio: '사이드바, ui 디자인 참여',
     image: '/team2.png', // public 폴더 내 이미지
     email: 'kim@example.com',
@@ -46,7 +46,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '박대희',
-    role: '조원',
+    role: '팀원 소개 페이지 제작',
     bio: '팀원 소개 페이지 제작',
     image: '/team3.png', // public 폴더 내 이미지
     email: 'park@example.com',
@@ -58,7 +58,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '최경규',
-    role: '조원',
+    role: '문의 페이지 제작',
     bio: '문의 페이지제작, 프로젝트 아이디어 제시',
     image: '/team4.png', // public 폴더 내 이미지
     email: 'jeong@example.com',
@@ -70,7 +70,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '오건우',
-    role: '조원',
+    role: '프로젝트 디자인',
     bio: '프로젝트 디자인 참여',
     image: '/team5.png', // public 폴더 내 이미지
     email: 'lee@example.com',
@@ -82,7 +82,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '유선빈',
-    role: '조원',
+    role: '??',
     bio: '??',
     image: '/team6.png', // public 폴더 내 이미지
     email: 'choi@example.com',
@@ -134,12 +134,12 @@ export default function TeamPage() {
             className="px-6 py-3 rounded-xl shadow-md bg-gray-100 text-gray-900"
           >
             <option value="">전체 역할</option>
-            <option value="팀장">팀장</option>
-            <option value="조원">조원</option>
-            <option value="조원">조원</option>
-            <option value="조원">조원</option>
-            <option value="조원">조원</option>
-            <option value="조원">조원</option>
+            <option value="프로젝트 전반 제작">프로젝트 전반 제작</option>
+            <option value="사이드바 제작">사이드바 제작</option>
+            <option value="팀원 소개 페이지 제작">팀원 소개 페이지 제작</option>
+            <option value="문의 페이지 제작">문의 페이지 제작</option>
+            <option value="프로젝트 디자인">프로젝트 디자인</option>
+            <option value="??">??</option>
           </select>
         </div>
       </header>
