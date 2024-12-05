@@ -15,10 +15,9 @@ const validCategories = [
 // POST 메서드: Topic 생성
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json() // JSON 데이터 읽기
+    const body = await request.json()
     const { title, description, price, category, image, userEmail } = body
 
-    // 유효성 검사
     if (!title || !description || !price || !category || !userEmail) {
       return NextResponse.json(
         { message: '상품명, 설명, 가격, 카테고리, 이메일은 모두 필수입니다.' },
@@ -26,7 +25,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 카테고리 유효성 검사
     if (!validCategories.includes(category)) {
       return NextResponse.json(
         { message: '유효한 카테고리 값을 선택해 주세요.' },
@@ -34,7 +32,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 가격 변환 및 유효성 검사
     const parsedPrice = parseFloat(price)
     if (isNaN(parsedPrice) || parsedPrice <= 0) {
       return NextResponse.json(
@@ -43,15 +40,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // MongoDB 연결 및 데이터 저장
     await connectMongoDB()
     const newTopic = await Topic.create({
       title,
       description,
       price: parsedPrice,
       category,
-      image: image || null, // Cloudinary 등에서 받은 이미지 URL 사용
+      image: image || null,
       userEmail,
+      views: 0, // 기본 조회수 0으로 설정
     })
 
     return NextResponse.json(
@@ -70,14 +67,11 @@ export async function POST(request: NextRequest) {
 // GET 메서드: 모든 Topic 조회
 export async function GET() {
   try {
-    // MongoDB 연결
     await connectMongoDB()
 
-    // 모든 Topic 조회
-    const topics = await Topic.find()
+    const topics = await Topic.find() // 모든 Topic 조회
 
-    // 정상적으로 조회한 데이터를 응답
-    return NextResponse.json({ topics }, { status: 200 })
+    return NextResponse.json({ topics }, { status: 200 }) // 조회수 포함된 데이터 반환
   } catch (error) {
     console.error('Error in GET /api/topics:', error)
     return NextResponse.json(
