@@ -49,7 +49,7 @@ export default function PopularProductsCarousel({
       setCurrentIndex((prevIndex) =>
         prevIndex === popularProducts.length - 1 ? 0 : prevIndex + 1
       )
-    }, 3000) // 3초마다 슬라이드 전환
+    }, 6000)
 
     return () => clearInterval(timer) // 컴포넌트 언마운트 시 타이머 정리
   }, [popularProducts.length])
