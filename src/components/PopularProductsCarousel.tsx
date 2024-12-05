@@ -4,24 +4,44 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+interface Topic {
+  _id: string
+  title: string
+  price: number
+  image?: string
+  views?: number // 조회수 필드가 있을 수 있음
+}
+
 interface Product {
   _id: string
   title: string
   price: number
   image?: string
-  views: number // 조회수 필드 추가
+  views: number // 조회수는 반드시 존재하는 값
 }
 
 export default function PopularProductsCarousel({
   products,
 }: {
-  products: Product[]
+  products: Topic[] // Topic[] 타입을 받음
 }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
+  // Topic을 Product로 변환
+  const convertTopicToProduct = (topic: Topic): Product => {
+    return {
+      _id: topic._id,
+      title: topic.title,
+      price: topic.price,
+      image: topic.image,
+      views: topic.views ?? 0, // views가 없으면 0으로 처리
+    }
+  }
+
   // 조회수를 기준으로 상위 5개의 인기 상품을 필터링
   const popularProducts = [...products]
-    .sort((a, b) => (b.views || 0) - (a.views || 0)) // 조회수 내림차순 정렬
+    .map(convertTopicToProduct) // Topic을 Product로 변환
+    .sort((a, b) => b.views - a.views) // 조회수 내림차순 정렬
     .slice(0, 5) // 상위 5개 상품만 선택
 
   useEffect(() => {

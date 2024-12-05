@@ -17,15 +17,6 @@ interface Topic {
   views?: number
 }
 
-interface Product {
-  id: string
-  title: string
-  price: number
-  image?: string
-  views?: number
-  // 필요한 다른 속성들
-}
-
 export default function TopicLists() {
   const [topics, setTopics] = useState<Topic[]>([])
   const [loading, setLoading] = useState(true)
@@ -43,17 +34,6 @@ export default function TopicLists() {
   const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
   const itemsPerPage = 8 // 한 페이지에 표시할 상품 개수
 
-  // Topic을 Product로 변환하는 함수
-  const convertTopicToProduct = (topic: Topic): Product => {
-    return {
-      id: topic._id,
-      title: topic.title,
-      price: topic.price,
-      image: topic.image,
-      views: topic.views,
-    }
-  }
-
   useEffect(() => {
     async function fetchTopics() {
       try {
@@ -68,7 +48,6 @@ export default function TopicLists() {
         const sortedTopics = data.topics
           .sort((a: Topic, b: Topic) => (b.views || 0) - (a.views || 0))
           .slice(0, 5)
-          .map((topic: Topic) => convertTopicToProduct(topic)) // 변환 함수 적용
 
         setPopularTopics(sortedTopics)
       } catch (error) {
