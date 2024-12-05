@@ -22,8 +22,8 @@ type TeamMember = {
 const teamMembers: TeamMember[] = [
   {
     name: '강희수',
-    role: '프론트엔드 개발자',
-    bio: '프론트엔드를 담당하는 강희수 입니다.',
+    role: '팀장',
+    bio: '프로젝트 전반 제작',
     image: '/team1.png', // public 폴더 내의 이미지 경로
     email: 'hong@example.com',
     social: {
@@ -34,8 +34,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '임건희',
-    role: '백엔드 개발자',
-    bio: '백엔드 개발을 담당하는 임건희입니다.',
+    role: '조원',
+    bio: '사이드바, ui 디자인 참여',
     image: '/team2.png', // public 폴더 내 이미지
     email: 'kim@example.com',
     social: {
@@ -46,8 +46,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '박대희',
-    role: 'UI/UX 디자이너',
-    bio: 'UI/UX 디자인을 담당하는 박대희입니다.',
+    role: '조원',
+    bio: '팀원 소개 페이지 제작',
     image: '/team3.png', // public 폴더 내 이미지
     email: 'park@example.com',
     social: {
@@ -58,8 +58,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '최경규',
-    role: '풀스택 개발자',
-    bio: '풀스택 개발을 담당하는 최경규입니다.',
+    role: '조원',
+    bio: '문의 페이지제작, 프로젝트 아이디어 제시',
     image: '/team4.png', // public 폴더 내 이미지
     email: 'jeong@example.com',
     social: {
@@ -70,8 +70,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '오건우',
-    role: '마케팅 담당',
-    bio: '마케팅 전략과 소셜 미디어를 담당하는 오건우입니다.',
+    role: '조원',
+    bio: '프로젝트 디자인 참여',
     image: '/team5.png', // public 폴더 내 이미지
     email: 'lee@example.com',
     social: {
@@ -82,8 +82,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '유선빈',
-    role: '시스템 관리자',
-    bio: '시스템 관리와 보안을 담당하는 유선빈입니다.',
+    role: '조원',
+    bio: '??',
     image: '/team6.png', // public 폴더 내 이미지
     email: 'choi@example.com',
     social: {
@@ -134,12 +134,12 @@ export default function TeamPage() {
             className="px-6 py-3 rounded-xl shadow-md bg-gray-100 text-gray-900"
           >
             <option value="">전체 역할</option>
-            <option value="프론트엔드 개발자">프론트엔드 개발자</option>
-            <option value="백엔드 개발자">백엔드 개발자</option>
-            <option value="UI/UX 디자이너">UI/UX 디자이너</option>
-            <option value="풀스택 개발자">풀스택 개발자</option>
-            <option value="마케팅 담당">마케팅 담당</option>
-            <option value="시스템 관리자">시스템 관리자</option>
+            <option value="팀장">팀장</option>
+            <option value="조원">조원</option>
+            <option value="조원">조원</option>
+            <option value="조원">조원</option>
+            <option value="조원">조원</option>
+            <option value="조원">조원</option>
           </select>
         </div>
       </header>
