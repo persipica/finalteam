@@ -1,4 +1,3 @@
-import Topic from '@/models/topic'
 import TopicList from '@/components/TopicList'
 
 import connectMongoDB from '@/libs/mongodb'
@@ -6,8 +5,6 @@ import connectMongoDB from '@/libs/mongodb'
 export default async function Home() {
   try {
     await connectMongoDB()
-
-    const topics = await Topic.find().sort({ price: -1 }).limit(5)
 
     return (
       <div>
