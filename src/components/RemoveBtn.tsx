@@ -3,18 +3,21 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { HiOutlineTrash } from 'react-icons/hi'
-import { title } from 'process'
 
-export default function RemoveBtn({ id }: { id: string }) {
+export default function RemoveBtn({
+  id,
+  title,
+}: {
+  id: string
+  title: string
+}) {
   const router = useRouter()
 
   // id가 빈 문자열인 경우 버튼을 렌더링하지 않음
   if (!id) return null
 
   async function removeTopic() {
-    const confirmed = confirm(
-      `Are you sure you want to delete the topic with ID: ${title}?`
-    )
+    const confirmed = confirm(`정말로 "${title}"을(를) 삭제하시겠습니까?`)
     if (confirmed) {
       // 수정된 API 엔드포인트로 DELETE 요청
       const res = await fetch(`/api/topics/${id}`, { method: 'DELETE' })
