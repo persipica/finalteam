@@ -159,7 +159,7 @@ export default function TopicLists() {
               <span className="text-xl">&#8592;</span>
             </button>
 
-            {/* 슬라이드 컨텐츠 */}
+            {/* 슬라이드 컨텐츠 (한 슬라이드에 한 상품만 표시) */}
             <div className="flex overflow-hidden">
               <div
                 className="flex transition-transform duration-300"
