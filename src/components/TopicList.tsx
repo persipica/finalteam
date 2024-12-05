@@ -239,13 +239,13 @@ export default function TopicLists() {
                   <div className="flex-1 pr-4">
                     {' '}
                     {/* 오른쪽 여백 추가 */}
-                    <h3 className="text-2xl font-semibold text-black">
+                    <h3 className="text-lg font-semibold text-black">
                       {topic.title}
                     </h3>{' '}
-                    {/* 제목 글씨 크기: 큰글씨 */}
+                    {/* 제목 글씨 크기: 중간글씨 */}
                     <p
                       className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
-                      style={{ maxWidth: '300px' }} // 상품 설명의 최대 너비 제한
+                      style={{ maxWidth: '120px' }} // 상품 설명의 최대 너비 제한
                     >
                       {topic.description}
                     </p>{' '}
@@ -254,10 +254,10 @@ export default function TopicLists() {
                       {topic.category}
                     </p>{' '}
                     {/* 카테고리 글씨 크기: 작은글씨 */}
-                    <p className="mt-2 text-2xl font-bold text-blue-600">
+                    <p className="mt-2 text-lg font-bold text-blue-600">
                       {topic.price.toLocaleString()} 원
                     </p>{' '}
-                    {/* 가격 글씨 크기: 큰글씨 */}
+                    {/* 가격 글씨 크기: 중간글씨 */}
                   </div>
 
                   {/* 오른쪽 영역 (조회수, 등록시간) */}
