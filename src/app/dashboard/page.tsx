@@ -6,9 +6,13 @@ import UserTopicList from '@/components/UserTopicList'
 import FavoritesList from '@/components/FavoritesList'
 
 export default function DashboardPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
-  if (!session) return <div>Loading...</div>
+  // 세션 로딩 중일 때 처리
+  if (status === 'loading') return <div>Loading...</div>
+
+  // 세션이 없을 때 처리
+  if (!session) return <div>세션 정보가 없습니다. 로그인 해주세요.</div>
 
   // session.user?.email이 undefined인 경우에 기본값 처리
   const userEmail = session.user?.email ?? ''
