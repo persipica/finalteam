@@ -57,7 +57,14 @@ export default function TopicLists() {
       }
     }
     fetchTopics()
-  }, [])
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) =>
+        prev === popularTopics.length - 1 ? 0 : prev + 1
+      )
+    }, 3000) // 3초마다 슬라이드 변경
+
+    return () => clearInterval(interval) // 컴포넌트 언마운트 시 클리어
+  }, [popularTopics])
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) =>
@@ -168,9 +175,9 @@ export default function TopicLists() {
                 {popularTopics.map((topic) => (
                   <div
                     key={topic._id}
-                    className="w-full flex-shrink-0 p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg mr-4"
+                    className="w-full flex-shrink-0 p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg"
                   >
-                    <div className="relative h-48 w-full mb-4">
+                    <div className="relative h-64 w-full mb-4">
                       <Image
                         src={topic.image || '/default-avatar.png'}
                         alt={topic.title}
