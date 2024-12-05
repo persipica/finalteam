@@ -102,6 +102,29 @@ export default function TopicDetailPage() {
   useEffect(() => {
     if (!id || !userEmail) return
 
+    const incrementViews = async () => {
+      try {
+        const res = await fetch(`/api/topics/${id}/increment-views`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userEmail }),
+        })
+        if (!res.ok) {
+          throw new Error('Failed to increment views')
+        }
+      } catch (error) {
+        console.error('Error incrementing views:', error)
+      }
+    }
+
+    incrementViews()
+  }, [id, userEmail])
+
+  useEffect(() => {
+    if (!id || !userEmail) return
+
     const fetchTopic = async () => {
       try {
         const res = await fetch(`/api/topics/${id}`, {

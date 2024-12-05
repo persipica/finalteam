@@ -3,9 +3,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Topic from '@/models/topic'
 import connectMongoDB from '@/libs/mongodb'
+import View from '@/models/view' // 조회 기록 모델
 import fs from 'fs'
 import path from 'path'
-import View from '@/models/view'
 
 export const GET = async (
   req: NextRequest,
@@ -30,19 +30,26 @@ export const GET = async (
         // 조회수 증가 및 조회 기록 생성
         topic.views = (topic.views || 0) + 1
         await topic.save()
+
         await View.create({ topicId: params.id, userEmail })
+        console.log(`조회수 증가: ${topic.views}, 사용자: ${userEmail}`)
+      } else {
+        console.log(`조회수 증가 건너뜀 (이미 조회됨): 사용자 ${userEmail}`)
       }
+    } else {
+      console.log('사용자 이메일 없음. 조회수 증가 건너뜀.')
     }
 
     return NextResponse.json(topic) // 상품 정보를 JSON으로 반환
   } catch (error) {
-    console.error(error)
+    console.error('조회수 증가 중 오류 발생:', error)
     return NextResponse.json(
       { message: '상품 정보 조회 중 오류 발생' },
       { status: 500 }
     )
   }
 }
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -50,11 +57,9 @@ export async function PUT(
   const id = params.id
 
   try {
-    // JSON 데이터 읽기
     const body = await req.json()
     const { title, description, price, category, image } = body
 
-    // 유효성 검사
     if (!title || !description || !price || !category) {
       return NextResponse.json(
         { message: '모든 필드를 채워주세요.' },
@@ -62,14 +67,12 @@ export async function PUT(
       )
     }
 
-    // MongoDB 연결
     await connectMongoDB()
 
-    // 데이터 업데이트
     const updatedTopic = await Topic.findByIdAndUpdate(
       id,
       { title, description, price, category, image },
-      { new: true } // 업데이트된 데이터를 반환
+      { new: true }
     )
 
     if (!updatedTopic) {
@@ -84,9 +87,9 @@ export async function PUT(
       { status: 200 }
     )
   } catch (error) {
-    console.error('Error updating topic:', error)
+    console.error('상품 수정 중 오류 발생:', error)
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { message: '상품 수정 중 오류 발생' },
       { status: 500 }
     )
   }
@@ -97,7 +100,6 @@ export const DELETE = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // 상품 조회
     const topic = await Topic.findById(params.id)
     if (!topic) {
       return NextResponse.json(
@@ -106,7 +108,6 @@ export const DELETE = async (
       )
     }
 
-    // 이미지 파일 삭제 (이미지 경로가 있을 경우)
     if (topic.image) {
       const imagePath = path.join(
         process.cwd(),
@@ -114,11 +115,10 @@ export const DELETE = async (
         topic.image.replace('/uploads/', '')
       )
       if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath) // 파일 삭제
+        fs.unlinkSync(imagePath)
       }
     }
 
-    // 상품 삭제
     await Topic.findByIdAndDelete(params.id)
 
     return NextResponse.json(
