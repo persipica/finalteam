@@ -100,7 +100,7 @@ export default function PopularProductsCarousel({
 
       {/* 왼쪽 화살표 */}
       <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 text-white p-4 rounded-full opacity-40 hover:opacity-75 transition-opacity duration-200"
         onClick={handlePrev}
       >
         &#8592;
@@ -108,7 +108,7 @@ export default function PopularProductsCarousel({
 
       {/* 오른쪽 화살표 */}
       <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 text-white p-4 rounded-full opacity-40 hover:opacity-75 transition-opacity duration-200"
         onClick={handleNext}
       >
         &#8594;
