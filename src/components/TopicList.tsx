@@ -28,7 +28,7 @@ export default function TopicLists() {
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   // 인기 상품 슬라이드를 위한 상태
-  const [popularTopics] = useState<Topic[]>([])
+  const [popularTopics, setPopularTopics] = useState<Topic[]>([])
 
   // 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
@@ -42,7 +42,15 @@ export default function TopicLists() {
           throw new Error('Failed to fetch topics')
         }
         const data = await res.json()
+
+        // TypeScript가 topics의 타입을 알 수 있도록 명시적으로 설정
         setTopics(data.topics)
+
+        // 인기 상품 설정: 조회수 기준으로 상위 5개 상품
+        const sortedTopics = data.topics
+          .sort((a: Topic, b: Topic) => (b.views ?? 0) - (a.views ?? 0)) // 조회수 내림차순 정렬
+          .slice(0, 5) // 상위 5개 선택
+        setPopularTopics(sortedTopics)
       } catch (error) {
         console.error('Error loading topics: ', error)
         setError('Failed to load topics')
@@ -215,7 +223,7 @@ export default function TopicLists() {
               key={topic._id}
               className="bg-white border border-gray-300 rounded-lg shadow-sm overflow-hidden"
             >
-              <Link href={`/topics/${topic._id}`}>
+              <Link href={`/detailTopic/${topic._id}`}>
                 {topic.image && (
                   <Image
                     src={topic.image}
