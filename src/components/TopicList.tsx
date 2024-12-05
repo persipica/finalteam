@@ -13,6 +13,7 @@ interface Topic {
   image?: string
   price: number
   category: string
+  views?: number
 }
 
 export default function TopicLists() {
@@ -216,6 +217,9 @@ export default function TopicLists() {
                 <span className="text-sm text-gray-500 ml-2">
                   ({getRelativeTime(topic.createdAt)})
                 </span>
+              </h3>
+              <h3 className="text-sm text-gray-500 mt-2">
+                조회수: {topic.views}
               </h3>
               <p className="text-sm text-gray-600 mt-2 truncate">
                 {topic.description}

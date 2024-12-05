@@ -16,6 +16,7 @@ interface Topic {
   price: number
   userEmail: string
   category: string
+  views?: number
 }
 
 interface Comment {
@@ -88,6 +89,29 @@ export default function TopicDetailPage() {
             JSON.stringify(visitedProducts)
           )
         }
+      } catch (error) {
+        console.error('Error fetching topic:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTopic()
+  }, [id, userEmail])
+
+  useEffect(() => {
+    if (!id || !userEmail) return
+
+    const fetchTopic = async () => {
+      try {
+        const res = await fetch(`/api/topics/${id}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userEmail }),
+        })
+        if (!res.ok) throw new Error('Failed to fetch topic')
+        const data = await res.json()
+        setTopic(data)
       } catch (error) {
         console.error('Error fetching topic:', error)
       } finally {
@@ -240,6 +264,7 @@ export default function TopicDetailPage() {
             />
           </div>
         )}
+        <p className="text-sm text-gray-500">조회수: {topic.views}</p>
         <div className="absolute top-0 right-0">
           {!isOwner && (
             <button

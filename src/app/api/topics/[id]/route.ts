@@ -5,12 +5,15 @@ import Topic from '@/models/topic'
 import connectMongoDB from '@/libs/mongodb'
 import fs from 'fs'
 import path from 'path'
+import View from '@/models/view'
 
 export const GET = async (
   req: NextRequest,
   { params }: { params: { id: string } }
 ) => {
   try {
+    await connectMongoDB()
+
     const topic = await Topic.findById(params.id)
     if (!topic) {
       return NextResponse.json(
@@ -18,6 +21,19 @@ export const GET = async (
         { status: 404 }
       )
     }
+
+    const userEmail = req.headers.get('x-user-email') // 헤더에서 사용자 이메일 가져오기
+    if (userEmail) {
+      // 조회 기록 확인
+      const existingView = await View.findOne({ topicId: params.id, userEmail })
+      if (!existingView) {
+        // 조회수 증가 및 조회 기록 생성
+        topic.views = (topic.views || 0) + 1
+        await topic.save()
+        await View.create({ topicId: params.id, userEmail })
+      }
+    }
+
     return NextResponse.json(topic) // 상품 정보를 JSON으로 반환
   } catch (error) {
     console.error(error)
@@ -27,7 +43,6 @@ export const GET = async (
     )
   }
 }
-
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }

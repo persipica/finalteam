@@ -8,6 +8,7 @@ interface ITopic {
   image?: string
   userEmail: string
   category: string
+  views?: number
   createdAt?: Date
   updatedAt?: Date
 }
@@ -20,6 +21,7 @@ const topicSchema = new Schema<ITopic>(
     image: { type: String },
     userEmail: { type: String, required: true },
     category: { type: String, required: true },
+    views: { type: Number, default: 0 }, // 조회수 필드 추가
   },
   {
     timestamps: true,
