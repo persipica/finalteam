@@ -103,24 +103,27 @@ export default function TopicDetailPage() {
     if (!id || !userEmail) return // id와 userEmail이 모두 필요하므로 한 번만 체크
 
     // 조회수 증가
-    const incrementViews = async () => {
+    const incrementViews = async (id: string, userEmail: string) => {
       try {
         const res = await fetch(`/api/topics/${id}/increment-views`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userEmail }),
+          body: JSON.stringify({ userEmail }), // body에 userEmail 포함
         })
+
         if (!res.ok) {
           throw new Error('Failed to increment views')
         }
+        console.log('Views incremented successfully')
       } catch (error) {
         console.error('Error incrementing views:', error)
       }
     }
 
-    incrementViews()
+    // 예시로 호출
+    incrementViews(id, userEmail)
 
     // 상품 정보 가져오기
 
