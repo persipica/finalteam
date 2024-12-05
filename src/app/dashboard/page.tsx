@@ -1,7 +1,6 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-
 import UserTopicList from '@/components/UserTopicList'
 import FavoritesList from '@/components/FavoritesList'
 
@@ -14,8 +13,9 @@ export default function DashboardPage() {
   // 세션이 없을 때 처리
   if (!session) return <div>세션 정보가 없습니다. 로그인 해주세요.</div>
 
-  // session.user?.email이 undefined인 경우에 기본값 처리
-  const userEmail = session.user?.email ?? ''
+  // session.user가 없을 때 기본값 처리
+  const userName = session.user?.name || '이름 정보 없음'
+  const userEmail = session.user?.email || '이메일 정보 없음'
 
   return (
     <div className="container mx-auto my-8 max-w-4xl">
@@ -24,10 +24,8 @@ export default function DashboardPage() {
       {/* 사용자 정보 */}
       <div className="mb-8">
         <h2 className="text-2xl font-semibold">내 정보</h2>
-        <p className="mt-2">이름: {session.user?.name}</p>
-        <p className="mt-2">
-          이메일: {session.user?.email || '이메일 정보 없음'}
-        </p>
+        <p className="mt-2">이름: {userName}</p>
+        <p className="mt-2">이메일: {userEmail}</p>
       </div>
 
       {/* 내가 등록한 상품 */}
@@ -38,7 +36,7 @@ export default function DashboardPage() {
 
       {/* 즐겨찾기 목록 */}
       <div className="mb-8">
-        {userEmail ? (
+        {userEmail !== '이메일 정보 없음' ? (
           <FavoritesList userEmail={userEmail} />
         ) : (
           <p>이메일 정보가 없어 즐겨찾기를 불러올 수 없습니다.</p>
