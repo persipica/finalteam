@@ -267,7 +267,17 @@ export default function TopicDetailPage() {
         />
       </div>
     )
-  if (!topic) return <div>상품을 찾을 수 없습니다.</div>
+  if (!topic)
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Image
+          src="/loading.gif" // 사용할 GIF 파일 경로
+          alt="Loading animation"
+          width={200}
+          height={200}
+        />
+      </div>
+    )
 
   const isOwner = userEmail === topic.userEmail
 
