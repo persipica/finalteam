@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import PopularProductsCarousel from './PopularProductsCarousel' // 컴포넌트 임포트
 
 interface Topic {
   _id: string
@@ -14,6 +15,15 @@ interface Topic {
   price: number
   category: string
   views?: number
+}
+
+interface Product {
+  id: string
+  title: string
+  price: number
+  image?: string
+  views?: number
+  // 필요한 다른 속성들
 }
 
 export default function TopicLists() {
@@ -28,10 +38,21 @@ export default function TopicLists() {
 
   // 인기 상품 슬라이드를 위한 상태
   const [popularTopics, setPopularTopics] = useState<Topic[]>([])
-  const [currentSlide, setCurrentSlide] = useState<number>(0)
+
   // 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
   const itemsPerPage = 8 // 한 페이지에 표시할 상품 개수
+
+  // Topic을 Product로 변환하는 함수
+  const convertTopicToProduct = (topic: Topic): Product => {
+    return {
+      id: topic._id,
+      title: topic.title,
+      price: topic.price,
+      image: topic.image,
+      views: topic.views,
+    }
+  }
 
   useEffect(() => {
     async function fetchTopics() {
@@ -47,6 +68,7 @@ export default function TopicLists() {
         const sortedTopics = data.topics
           .sort((a: Topic, b: Topic) => (b.views || 0) - (a.views || 0))
           .slice(0, 5)
+          .map((topic: Topic) => convertTopicToProduct(topic)) // 변환 함수 적용
 
         setPopularTopics(sortedTopics)
       } catch (error) {
@@ -57,26 +79,7 @@ export default function TopicLists() {
       }
     }
     fetchTopics()
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) =>
-        prev === popularTopics.length - 1 ? 0 : prev + 1
-      )
-    }, 3000) // 3초마다 슬라이드 변경
-
-    return () => clearInterval(interval) // 컴포넌트 언마운트 시 클리어
-  }, [popularTopics])
-
-  const handlePrevSlide = () => {
-    setCurrentSlide((prev) =>
-      prev === 0 ? popularTopics.length - 1 : prev - 1
-    )
-  }
-
-  const handleNextSlide = () => {
-    setCurrentSlide((prev) =>
-      prev === popularTopics.length - 1 ? 0 : prev + 1
-    )
-  }
+  }, [])
 
   const filteredTopics = topics
     .filter((topic) => {
@@ -155,70 +158,10 @@ export default function TopicLists() {
     <div className="container mx-auto my-8">
       {/* 인기 상품 슬라이드 */}
       {popularTopics.length > 0 && (
-        <div className="relative mb-6">
+        <div className="mb-6">
           <h2 className="text-2xl font-bold mb-4">인기 상품</h2>
-          <div className="relative w-full">
-            {/* 왼쪽 화살표 */}
-            <button
-              onClick={handlePrevSlide}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
-            >
-              <span className="text-xl">&#8592;</span>
-            </button>
-
-            {/* 슬라이드 컨텐츠 (한 슬라이드에 한 상품만 표시) */}
-            <div className="overflow-hidden w-70%">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {popularTopics.map((topic) => (
-                  <div
-                    key={topic._id}
-                    className="w-full flex-shrink-0 p-4 bg-white border border-gray-300 rounded-md shadow hover:shadow-lg"
-                  >
-                    <div className="relative h-64 w-full mb-4">
-                      <Image
-                        src={topic.image || '/default-avatar.png'}
-                        alt={topic.title}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-md"
-                      />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-800 truncate">
-                      {topic.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-2 truncate">
-                      {topic.description}
-                    </p>
-                    <p className="text-sm text-gray-500 mt-2">
-                      {topic.category}
-                    </p>
-                    <h3 className="text-lg font-bold text-gray-800 mt-4">
-                      {topic.price}원
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      조회수: {topic.views}
-                    </p>
-                    <Link href={`/detailTopic/${topic._id}`} passHref>
-                      <button className="text-blue-600 mt-4">
-                        자세히 보기
-                      </button>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 오른쪽 화살표 */}
-            <button
-              onClick={handleNextSlide}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
-            >
-              <span className="text-xl">&#8594;</span>
-            </button>
-          </div>
+          <PopularProductsCarousel products={popularTopics} />{' '}
+          {/* 인기상품 슬라이드 컴포넌트 추가 */}
         </div>
       )}
       {/* 필터, 정렬 UI */}
@@ -298,56 +241,55 @@ export default function TopicLists() {
           {paginatedTopics.map((topic) => (
             <div
               key={topic._id}
-              className="bg-white border border-gray-300 rounded-md shadow hover:shadow-lg p-4 transition"
+              className="bg-white border border-gray-300 rounded-lg shadow-sm overflow-hidden"
             >
-              <div className="relative h-48 w-full mb-4">
-                <Image
-                  src={topic.image || '/default-avatar.png'}
-                  alt={topic.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-md"
-                />
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 truncate">
-                {topic.title}
-                <span className="text-sm text-gray-500 ml-2">
-                  ({getRelativeTime(topic.createdAt)})
-                </span>
-              </h3>
-              <h3 className="text-sm text-gray-500 mt-2">
-                조회수: {topic.views}
-              </h3>
-              <p className="text-sm text-gray-600 mt-2 truncate">
-                {topic.description}
-              </p>
-              <p className="text-sm text-gray-500 mt-2">{topic.category}</p>
-              <h3 className="text-lg font-bold text-gray-800 truncate mt-4">
-                {topic.price}원
-              </h3>
-              <Link href={`/detailTopic/${topic._id}`} passHref>
-                <button className="text-blue-600 mt-4">자세히 보기</button>
+              <Link href={`/topics/${topic._id}`}>
+                {topic.image && (
+                  <Image
+                    src={topic.image}
+                    alt={topic.title}
+                    width={500}
+                    height={300}
+                    className="object-cover w-full h-48"
+                  />
+                )}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {topic.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {getRelativeTime(topic.createdAt)}
+                  </p>
+                  <p className="mt-2 text-xl font-bold">
+                    {topic.price.toLocaleString()} 원
+                  </p>
+                </div>
               </Link>
             </div>
           ))}
         </div>
       )}
 
-      {/* 페이지네이션 UI */}
-      <div className="flex justify-center items-center mt-6 space-x-2">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            key={i}
-            className={`px-4 py-2 rounded-md ${
-              currentPage === i + 1
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-600'
-            }`}
-            onClick={() => handlePageChange(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
+      {/* 페이지네이션 */}
+      <div className="flex justify-center mt-8">
+        <nav>
+          <ul className="flex space-x-4">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`px-4 py-2 rounded-md ${
+                    currentPage === index + 1
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-white text-blue-500 border border-blue-500'
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   )

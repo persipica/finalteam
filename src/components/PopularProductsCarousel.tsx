@@ -9,34 +9,54 @@ interface Product {
   title: string
   price: number
   image?: string
+  views: number // 조회수 필드 추가
 }
 
-export default function PopularProductsCarousel({ products }: { products: Product[] }) {
+export default function PopularProductsCarousel({
+  products,
+}: {
+  products: Product[]
+}) {
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  // 조회수를 기준으로 상위 5개의 인기 상품을 필터링
+  const popularProducts = [...products]
+    .sort((a, b) => (b.views || 0) - (a.views || 0)) // 조회수 내림차순 정렬
+    .slice(0, 5) // 상위 5개 상품만 선택
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === products.length - 1 ? 0 : prevIndex + 1
+      setCurrentIndex((prevIndex) =>
+        prevIndex === popularProducts.length - 1 ? 0 : prevIndex + 1
       )
-    }, 3000)
+    }, 3000) // 3초마다 슬라이드 전환
 
-    return () => clearInterval(timer)
-  }, [products.length])
+    return () => clearInterval(timer) // 컴포넌트 언마운트 시 타이머 정리
+  }, [popularProducts.length])
 
-  if (!products.length) return null
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? popularProducts.length - 1 : prevIndex - 1
+    )
+  }
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === popularProducts.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  if (!popularProducts.length) return null
 
   return (
-    <div style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
-      <div 
-        style={{ 
-          display: 'flex',
-          transition: 'transform 500ms ease-in-out',
-          transform: `translateX(-${currentIndex * 100}%)`
-        }}
+    <div className="relative w-full overflow-hidden">
+      {/* 슬라이드 컨테이너 */}
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {products.map((product) => (
-          <div key={product._id} style={{ minWidth: '100%', flexShrink: 0 }}>
+        {popularProducts.map((product) => (
+          <div key={product._id} className="w-full flex-shrink-0">
             <Link href={`/detailTopic/${product._id}`}>
               <div className="flex flex-col items-center p-4">
                 <div className="relative w-64 h-64">
@@ -48,12 +68,31 @@ export default function PopularProductsCarousel({ products }: { products: Produc
                   />
                 </div>
                 <h3 className="text-xl font-semibold mt-4">{product.title}</h3>
-                <p className="text-lg font-bold text-blue-600">{product.price}원</p>
+                <p className="text-lg font-bold text-blue-600">
+                  {product.price}원
+                </p>
+                <p className="text-sm text-gray-500">조회수: {product.views}</p>
               </div>
             </Link>
           </div>
         ))}
       </div>
+
+      {/* 왼쪽 화살표 */}
+      <button
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full"
+        onClick={handlePrev}
+      >
+        &#8592;
+      </button>
+
+      {/* 오른쪽 화살표 */}
+      <button
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full"
+        onClick={handleNext}
+      >
+        &#8594;
+      </button>
     </div>
   )
 }
