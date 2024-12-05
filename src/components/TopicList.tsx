@@ -62,16 +62,17 @@ export default function TopicLists() {
       return true
     })
     .sort((a, b) => {
-      if (priceSortOrder === 'asc') {
-        return a.price - b.price
-      } else if (priceSortOrder === 'desc') {
-        return b.price - a.price
+      if (priceSortOrder) {
+        // 가격 정렬
+        return priceSortOrder === 'asc' ? a.price - b.price : b.price - a.price
       }
-      if (dateSortOrder === 'desc') {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      } else {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      if (dateSortOrder) {
+        // 날짜 정렬
+        return dateSortOrder === 'asc'
+          ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       }
+      return 0 // 기본 정렬 유지
     })
 
   // 페이지네이션에 따른 데이터 분리
@@ -151,7 +152,10 @@ export default function TopicLists() {
           <select
             id="priceSort"
             value={priceSortOrder}
-            onChange={(e) => setPriceSortOrder(e.target.value)}
+            onChange={(e) => {
+              setPriceSortOrder(e.target.value)
+              setDateSortOrder('') // 날짜 정렬 초기화
+            }}
             className="border border-gray-300 rounded-md p-2"
           >
             <option value="asc">가격 낮은순</option>
@@ -167,7 +171,7 @@ export default function TopicLists() {
             id="dateSort"
             value={dateSortOrder}
             onChange={(e) => {
-              setDateSortOrder(e.target.value) // 날짜 정렬 설정
+              setDateSortOrder(e.target.value)
               setPriceSortOrder('') // 가격 정렬 초기화
             }}
             className="border border-gray-300 rounded-md p-2"
