@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { HiOutlineTrash } from 'react-icons/hi'
+import { title } from 'process'
 
 export default function RemoveBtn({ id }: { id: string }) {
   const router = useRouter()
@@ -12,7 +13,7 @@ export default function RemoveBtn({ id }: { id: string }) {
 
   async function removeTopic() {
     const confirmed = confirm(
-      `Are you sure you want to delete the topic with ID: ${id}?`
+      `Are you sure you want to delete the topic with ID: ${title}?`
     )
     if (confirmed) {
       // 수정된 API 엔드포인트로 DELETE 요청
