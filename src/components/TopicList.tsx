@@ -236,18 +236,16 @@ export default function TopicLists() {
                 )}
                 <div className="p-4 flex justify-between">
                   {/* 왼쪽 영역 (제목, 설명, 카테고리, 가격) */}
-                  <div className="flex-1">
+                  <div className="flex-1 pr-4">
+                    {' '}
+                    {/* 오른쪽 여백 추가 */}
                     <h3 className="text-2xl font-semibold text-black">
                       {topic.title}
                     </h3>{' '}
                     {/* 제목 글씨 크기: 큰글씨 */}
                     <p
-                      className="text-base text-black mt-1 truncate"
-                      style={{
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                      }}
+                      className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
+                      style={{ maxWidth: '300px' }} // 상품 설명의 최대 너비 제한
                     >
                       {topic.description}
                     </p>{' '}
@@ -263,7 +261,7 @@ export default function TopicLists() {
                   </div>
 
                   {/* 오른쪽 영역 (조회수, 등록시간) */}
-                  <div className="ml-4 flex flex-col items-end">
+                  <div className="flex flex-col items-end justify-between">
                     <p className="text-xs text-gray-500">
                       {getRelativeTime(topic.createdAt)}
                     </p>{' '}
