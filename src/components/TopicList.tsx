@@ -25,8 +25,9 @@ export default function TopicLists() {
   const [dateSortOrder, setDateSortOrder] = useState<string>('desc')
   const [searchQuery, setSearchQuery] = useState<string>('')
 
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const itemsPerPage = 8
+  // 페이지네이션 관련 상태
+  const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
+  const itemsPerPage = 8 // 한 페이지에 표시할 상품 개수
 
   useEffect(() => {
     async function fetchTopics() {
@@ -73,11 +74,12 @@ export default function TopicLists() {
       }
     })
 
-  const totalItems = filteredTopics.length
-  const totalPages = Math.ceil(totalItems / itemsPerPage)
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const paginatedTopics = filteredTopics.slice(startIndex, endIndex)
+  // 페이지네이션에 따른 데이터 분리
+  const totalItems = filteredTopics.length // 필터링된 총 상품 개수
+  const totalPages = Math.ceil(totalItems / itemsPerPage) // 전체 페이지 수 계산
+  const startIndex = (currentPage - 1) * itemsPerPage // 현재 페이지의 시작 인덱스
+  const endIndex = startIndex + itemsPerPage // 현재 페이지의 끝 인덱스
+  const paginatedTopics = filteredTopics.slice(startIndex, endIndex) // 현재 페이지에 해당하는 상품 목록
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
@@ -109,7 +111,7 @@ export default function TopicLists() {
     return (
       <div className="flex justify-center items-center h-64">
         <Image
-          src="/loading.gif"
+          src="/loading.gif" // 사용할 GIF 파일 경로
           alt="Loading animation"
           width={200}
           height={200}
@@ -122,7 +124,68 @@ export default function TopicLists() {
     <div className="container mx-auto my-8">
       {/* 필터, 정렬 UI */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-        {/* ...필터 UI 생략 */}
+        <div>
+          <label htmlFor="category" className="mr-2">
+            카테고리:
+          </label>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="border border-gray-300 rounded-md p-2"
+          >
+            <option value="">전체</option>
+            <option value="가전제품">가전제품</option>
+            <option value="문구(완구)">문구(완구)</option>
+            <option value="장난감">장난감</option>
+            <option value="생필품">생필품</option>
+            <option value="가구">가구</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="priceSort" className="mr-2">
+            가격 순:
+          </label>
+          <select
+            id="priceSort"
+            value={priceSortOrder}
+            onChange={(e) => setPriceSortOrder(e.target.value)}
+            className="border border-gray-300 rounded-md p-2"
+          >
+            <option value="asc">가격 낮은순</option>
+            <option value="desc">가격 높은순</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="dateSort" className="mr-2">
+            날짜 순:
+          </label>
+          <select
+            id="dateSort"
+            value={dateSortOrder}
+            onChange={(e) => {
+              setDateSortOrder(e.target.value) // 날짜 정렬 설정
+              setPriceSortOrder('') // 가격 정렬 초기화
+            }}
+            className="border border-gray-300 rounded-md p-2"
+          >
+            <option value="desc">최신순</option>
+            <option value="asc">오래된순</option>
+          </select>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="검색어를 입력하세요..."
+            className="border border-gray-300 rounded-md p-2 w-full sm:w-auto"
+          />
+        </div>
       </div>
 
       {/* 상품 목록 */}
@@ -165,7 +228,7 @@ export default function TopicLists() {
         </div>
       )}
 
-      {/* 페이지네이션 */}
+      {/* 페이지네이션 UI */}
       <div className="flex justify-center items-center mt-6 space-x-2">
         {Array.from({ length: totalPages }, (_, i) => (
           <button
