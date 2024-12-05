@@ -6,10 +6,10 @@ interface ITopic {
   description: string
   price: number
   image?: string
-  userEmail: string // 상품을 올린 사용자의 이메일 추가
-  category: string // 카테고리 추가
-  createdAt?: Date // 자동 생성되는 필드
-  updatedAt?: Date // 자동 생성되는 필드
+  userEmail: string
+  category: string
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 const topicSchema = new Schema<ITopic>(
@@ -22,7 +22,7 @@ const topicSchema = new Schema<ITopic>(
     category: { type: String, required: true },
   },
   {
-    timestamps: true, // createdAt과 updatedAt 필드 자동 추가
+    timestamps: true,
   }
 )
 
