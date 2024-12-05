@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import PopularProductsCarousel from './PopularProductsCarousel' // 컴포넌트 임포트
+import PopularProductsCarousel from './PopularProductsCarousel'
+import { FaEye } from 'react-icons/fa'
 
 interface Topic {
   _id: string
@@ -233,23 +234,39 @@ export default function TopicLists() {
                     className="object-cover w-full h-48"
                   />
                 )}
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {topic.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {getRelativeTime(topic.createdAt)}
-                  </p>
-                  <h3 className="text-sm text-gray-500 mt-2">
-                    조회수: {topic.views}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-2 truncate">
-                    {topic.description}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-2">{topic.category}</p>
-                  <p className="mt-2 text-xl font-bold">
-                    {topic.price.toLocaleString()} 원
-                  </p>
+                <div className="p-4 flex justify-between">
+                  {/* 왼쪽 영역 (제목, 설명, 카테고리, 가격) */}
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold text-black">
+                      {topic.title}
+                    </h3>{' '}
+                    {/* 제목 글씨 크기: 큰글씨 */}
+                    <p className="text-base text-black mt-1 truncate">
+                      {topic.description}
+                    </p>{' '}
+                    {/* 설명 글씨 크기: 중간글씨 */}
+                    <p className="text-sm text-gray-500 mt-2">
+                      {topic.category}
+                    </p>{' '}
+                    {/* 카테고리 글씨 크기: 작은글씨 */}
+                    <p className="mt-2 text-2xl font-bold text-blue-600">
+                      {topic.price.toLocaleString()} 원
+                    </p>{' '}
+                    {/* 가격 글씨 크기: 큰글씨 */}
+                  </div>
+
+                  {/* 오른쪽 영역 (조회수, 등록시간) */}
+                  <div className="ml-4 flex flex-col items-end">
+                    <p className="text-xs text-gray-500">
+                      {getRelativeTime(topic.createdAt)}
+                    </p>{' '}
+                    {/* 등록시간 글씨 크기: 작은글씨 */}
+                    <div className="text-xs text-gray-500 mt-2 flex items-center">
+                      <FaEye className="mr-1" /> {/* 눈 아이콘 */}
+                      {topic.views}
+                    </div>{' '}
+                    {/* 조회수 아이콘 및 숫자 */}
+                  </div>
                 </div>
               </Link>
             </div>
