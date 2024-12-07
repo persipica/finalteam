@@ -56,8 +56,8 @@ export default function RootLayout({
                     <Image
                       src="/logo.png"
                       alt="Logo"
-                      width={80}
-                      height={90}
+                      width={70}
+                      height={70}
                       className="object-contain"
                     />
                     <div className="flex flex-col">
