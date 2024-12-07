@@ -54,10 +54,10 @@ export default function RootLayout({
                   {/* 로고와 브랜드명 */}
                   <Link href="/" className="flex items-center space-x-4">
                     <Image
-                      src="/logo.png"
+                      src="/logo.jpg"
                       alt="Logo"
-                      width={60}
-                      height={60}
+                      width={120}
+                      height={130}
                       className="object-contain"
                     />
                     <div className="flex flex-col">
