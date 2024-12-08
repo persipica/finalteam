@@ -30,14 +30,6 @@ const Footer: React.FC = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href="/"
-                      className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                    >
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
                     <a
                       className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                       href="https://github.com/persipica"
@@ -68,6 +60,14 @@ const Footer: React.FC = () => {
                       className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                     >
                       Contact Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/TOS"
+                      className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                    >
+                      Terms of Use
                     </Link>
                   </li>
                 </ul>
