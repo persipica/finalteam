@@ -1,17 +1,17 @@
-'use client';
-import React, { useState } from 'react';
+'use client'
+import React, { useState } from 'react'
 
 const TOSPage = () => {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>(
     {}
-  );
+  )
 
   const toggleSection = (sectionId: string) => {
     setOpenSections((prev) => ({
       ...prev,
       [sectionId]: !prev[sectionId],
-    }));
-  };
+    }))
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-8">
@@ -31,7 +31,7 @@ const TOSPage = () => {
           {openSections['section1'] && (
             <div className="mt-4 space-y-2">
               <p>
-                1. 본 약관은 중고나가 운영하는 인터넷 사이트
+                1. 본 약관은 중부나라가 운영하는 인터넷 사이트
                 &apos;https://finalteam.vercel.app/&apos;(이하
                 &apos;사이트&apos;라 합니다) 전자상거래 서비스와 관련하여
                 당사자의 권리 의무 및 책임사항을 규정하는 것을 목적으로 합니다.
@@ -60,7 +60,7 @@ const TOSPage = () => {
                 본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
               </p>
               <p>
-                1. &apos;회사&apos;라 함은, 중고나이 재화 또는 용역을 제공하기
+                1. &apos;회사&apos;라 함은, 중부나라이 재화 또는 용역을 제공하기
                 위하여 컴퓨터 등 정보통신설비를 이용하여 상품을 거래할 수 있도록
                 설정한 가상의 영업장을 운영하는 주체를 말하며, 아울러
                 &apos;https://finalteam.vercel.app/&apos;을 통해 제공되는
@@ -115,35 +115,27 @@ const TOSPage = () => {
           {openSections['section4'] && (
             <div className="mt-4 space-y-2">
               <p>
-                1. &apos;회사&apos;는 이 약관의 내용과 상호 및 대표자 성명,
-                영업소 소재지, 전화번호, 모사전송번호(FAX), 전자우편주소,
-                사업자등록번호, 통신판매업신고번호 등을 &apos;이용자&apos;가
-                쉽게 알 수 있도록 &apos;사이트&apos;의 초기 서비스화면에
-                게시합니다. 다만, 본 약관의 내용은 이용자가 연결화면을 통하여
-                확인할 수 있도록 할 수 있습니다.
-              </p>
-              <p>
-                2. &apos;회사&apos;는 &apos;이용자&apos;가 약관에 동의하기에
+                1. &apos;회사&apos;는 &apos;이용자&apos;가 약관에 동의하기에
                 앞서 약관에 정해진 내용 중 청약철회, 배송책임, 환불조건 등과
                 같은 내용을 &apos;이용자&apos;가 이해할 수 있도록 별도의
                 연결화면 또는 팝업화면 등을 통하여 이용자의 확인을 구합니다.
               </p>
               <p>
-                3. &apos;회사&apos;는 &apos;전자상거래법&apos;,
+                2. &apos;회사&apos;는 &apos;전자상거래법&apos;,
                 &apos;약관규제법&apos;, &apos;전자문서법&apos;,
                 &apos;전자금융거래법&apos;, &apos;정보통신망법&apos;,
                 &apos;소비자기본법&apos; 등 관계법령에 위배되지 않는 범위 내에서
                 본 약관을 개정할 수 있습니다.
               </p>
               <p>
-                4. &apos;회사&apos;가 본 약관을 개정하고자 할 경우, 적용일자 및
+                3. &apos;회사&apos;가 본 약관을 개정하고자 할 경우, 적용일자 및
                 개정사유를 명시하여 현행약관과 함께 온라인 쇼핑몰의 초기화면에
                 그 적용일자 7일전부터 적용일자 전날까지 공지합니다. 다만,
                 &apos;이용자&apos;에게 불리한 내용으로 약관을 변경하는 경우 최소
                 30일 이상 유예기간을 두고 공지합니다.
               </p>
               <p>
-                5. &apos;회사&apos;가 본 약관을 개정한 경우, 개정약관은 적용일자
+                4. &apos;회사&apos;가 본 약관을 개정한 경우, 개정약관은 적용일자
                 이후 체결되는 계약에만 적용되며 적용일자 이전 체결된 계약은 개정
                 전 약관이 적용됩니다. 다만, 이미 계약을 체결한
                 &apos;이용자&apos;가 개정약관의 내용을 적용받고자 하는 뜻을
@@ -232,14 +224,14 @@ const TOSPage = () => {
 
       <div className="mt-12 pt-8 border-t text-sm text-gray-600">
         <p>
-          &quot;중고나&quot; 상점의 판매상품을 제외한 모든 상품들에 대하여,
-          (주)중고나는 통신판매중개자로서 거래 당사자가 아니며 판매 회원과 구매
-          회원 간의 상품거래 정보 및 거래에 관여하지 않고, 어떠한 의무와 책임도
-          부담하지 않습니다.
+          &quot;중부나라&quot; 상점의 판매상품을 제외한 모든 상품들에 대하여,
+          (주)중부나라는 통신판매중개자로서 거래 당사자가 아니며 판매 회원과
+          구매 회원 간의 상품거래 정보 및 거래에 관여하지 않고, 어떠한 의무와
+          책임도 부담하지 않습니다.
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TOSPage;
+export default TOSPage
