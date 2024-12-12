@@ -224,17 +224,24 @@ export default function TopicDetailPage() {
   }
 
   const handleStatusChange = async (newStatus: string) => {
-    setStatus(newStatus) // UI 상태 업데이트
+    if (!topic) return // topic이 null일 경우를 처리
+
     try {
-      const res = await fetch(`/api/topics/${id}/status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const res = await fetch(`/api/topics/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       })
 
       if (!res.ok) throw new Error('Failed to update status')
+
+      const data = await res.json()
+
+      // 타입을 명시적으로 지정하여 안전하게 업데이트
+      setTopic((prev) => ({
+        ...(prev as Topic), // 기존 topic 객체를 유지
+        status: data.status, // 새 상태만 업데이트
+      }))
     } catch (error) {
       console.error('Error updating status:', error)
     }
