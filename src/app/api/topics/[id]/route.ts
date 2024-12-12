@@ -58,6 +58,15 @@ export const PATCH = async (
     await connectMongoDB()
     const { id } = params
     const { userEmail } = await req.json()
+    const { status } = await req.json() // 요청에서 status 값 추출
+
+    const validStatuses = ['판매중', '예약중', '판매완료']
+    if (!validStatuses.includes(status)) {
+      return NextResponse.json(
+        { message: '유효한 상태 값을 입력해주세요.' },
+        { status: 400 }
+      )
+    }
 
     if (!userEmail) {
       return NextResponse.json(
@@ -80,6 +89,7 @@ export const PATCH = async (
       // 조회수 증가 및 조회 기록 저장
       topic.views = (topic.views || 0) + 1
       await topic.save()
+      topic.status = status
 
       await View.create({ topicId: id, userEmail })
       console.log(`조회수 증가: ${topic.views}, 사용자: ${userEmail}`)

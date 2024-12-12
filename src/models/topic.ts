@@ -11,6 +11,7 @@ interface ITopic {
   views?: number
   createdAt?: Date
   updatedAt?: Date
+  status: string
 }
 
 const topicSchema = new Schema<ITopic>(
@@ -22,6 +23,7 @@ const topicSchema = new Schema<ITopic>(
     userEmail: { type: String, required: true },
     category: { type: String, required: true },
     views: { type: Number, default: 0 }, // 조회수 필드 추가
+    status: { type: String, default: '판매중' },
   },
   {
     timestamps: true,
