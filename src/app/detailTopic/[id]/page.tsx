@@ -325,6 +325,7 @@ export default function TopicDetailPage() {
             )}
           </div>
         )}
+        <p className="text-sm text-gray-500 mb-2">판매자: {topic.userEmail}</p>
         <p className="text-sm text-gray-500">조회수: {topic.views}</p>
         <div className="absolute top-0 right-0">
           {!isOwner && (

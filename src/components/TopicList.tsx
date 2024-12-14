@@ -16,6 +16,7 @@ interface Topic {
   price: number
   category: string
   views?: number
+  status?: '판매중' | '예약중' | '판매완료'
 }
 
 export default function TopicLists() {
@@ -222,55 +223,58 @@ export default function TopicLists() {
           {paginatedTopics.map((topic) => (
             <div
               key={topic._id}
-              className="bg-white border border-gray-300 rounded-lg shadow-sm overflow-hidden"
+              className="bg-white border border-gray-300 rounded-lg shadow-sm overflow-hidden relative"
             >
               <Link href={`/detailTopic/${topic._id}`}>
                 {topic.image && (
-                  <Image
-                    src={topic.image}
-                    alt={topic.title}
-                    width={500}
-                    height={300}
-                    className="object-cover w-full h-48"
-                  />
+                  <div className="relative">
+                    <Image
+                      src={topic.image}
+                      alt={topic.title}
+                      width={500}
+                      height={300}
+                      className={`object-cover w-full h-48 transition-all duration-300 ${
+                        topic.status === '판매중' ? '' : 'blur-md'
+                      }`}
+                    />
+                    {topic.status !== '판매중' && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <span className="text-white text-xl font-bold">
+                          {topic.status}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 )}
                 <div className="p-4 flex justify-between">
                   {/* 왼쪽 영역 (제목, 설명, 카테고리, 가격) */}
                   <div className="flex-1 pr-4">
-                    {' '}
-                    {/* 오른쪽 여백 추가 */}
                     <h3 className="text-lg font-semibold text-black">
                       {topic.title}
-                    </h3>{' '}
-                    {/* 제목 글씨 크기: 중간글씨 */}
+                    </h3>
                     <p
                       className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
-                      style={{ maxWidth: '120px' }} // 상품 설명의 최대 너비 제한
+                      style={{ maxWidth: '120px' }}
                     >
                       {topic.description}
-                    </p>{' '}
-                    {/* 설명 글씨 크기: 중간글씨, 설명이 길면 ...으로 생략 */}
+                    </p>
                     <p className="text-sm text-gray-500 mt-2">
                       {topic.category}
-                    </p>{' '}
-                    {/* 카테고리 글씨 크기: 작은글씨 */}
+                    </p>
                     <p className="mt-2 text-lg font-bold text-blue-600">
                       {topic.price.toLocaleString()} 원
-                    </p>{' '}
-                    {/* 가격 글씨 크기: 중간글씨 */}
+                    </p>
                   </div>
 
                   {/* 오른쪽 영역 (조회수, 등록시간) */}
                   <div className="flex flex-col items-end justify-between">
                     <p className="text-xs text-gray-500">
                       {getRelativeTime(topic.createdAt)}
-                    </p>{' '}
-                    {/* 등록시간 글씨 크기: 작은글씨 */}
+                    </p>
                     <div className="text-xs text-gray-500 mt-2 flex items-center">
-                      <FaEye className="mr-1" /> {/* 눈 아이콘 */}
+                      <FaEye className="mr-1" />
                       {topic.views}
-                    </div>{' '}
-                    {/* 조회수 아이콘 및 숫자 */}
+                    </div>
                   </div>
                 </div>
               </Link>
