@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './wikiPage.module.css'
+import styles from './page.module.css'
 
 const features = [
   {
