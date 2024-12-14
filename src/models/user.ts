@@ -1,4 +1,3 @@
-// src/models/user.ts
 import mongoose, { Model, Schema } from 'mongoose'
 
 interface IUser {

@@ -3,13 +3,13 @@ import connectMongoDB from '@/libs/mongodb'
 import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
   try {
-    const { name, email } = await request.json() // 입력 유효성 검사
+    const { name, email } = await request.json()
     if (!name || !email) {
       return NextResponse.json(
         { error: 'Name and email are required' },
         { status: 400 }
       )
-    } // 이메일 형식 검사
+    }
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       return NextResponse.json(
         { error: 'Invalid email format' },

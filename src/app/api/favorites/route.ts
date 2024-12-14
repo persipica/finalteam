@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import Favorite from '@/models/Favorite'
-import Topic from '@/models/topic' // 추가
+import Topic from '@/models/topic'
 import connectMongoDB from '@/libs/mongodb'
 
-// POST 요청 처리 (찜 추가)
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB()
@@ -38,7 +37,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET 요청 처리 (찜 목록 조회)
 export async function GET(req: NextRequest) {
   try {
     await connectMongoDB()
@@ -55,7 +53,6 @@ export async function GET(req: NextRequest) {
 
     const favorites = await Favorite.find({ userEmail }).populate('topicId')
 
-    // 유효성 검증 및 null-safe 처리
     const sanitizedFavorites = favorites.map((fav) => ({
       ...fav.toObject(),
       topicId: fav.topicId || { title: 'Unknown', description: '', price: 0 },
@@ -71,7 +68,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// DELETE 요청 처리 (찜 목록에서 삭제)
 export async function DELETE(req: NextRequest) {
   try {
     await connectMongoDB()

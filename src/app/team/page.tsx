@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 
-// 팀원 데이터 타입 정의
 type TeamMember = {
   name: string
   role: string
@@ -24,7 +23,7 @@ const teamMembers: TeamMember[] = [
     name: '강희수',
     role: '프로젝트 전반 제작',
     bio: '프로젝트 전반 제작',
-    image: '/team1.png', // public 폴더 내의 이미지 경로
+    image: '/team1.png',
     email: 'studyharder11@gmail.com',
     social: {
       github: 'https://github.com/persipica',
@@ -36,7 +35,7 @@ const teamMembers: TeamMember[] = [
     name: '임건희',
     role: '사이드바 제작, 게시판 제작',
     bio: '사이드바, ui 디자인 참여, 게시판 기능 제작',
-    image: '/team2.png', // public 폴더 내 이미지
+    image: '/team2.png',
     email: 'kim@example.com',
     social: {
       github: 'https://github.com/limgunny',
@@ -48,7 +47,7 @@ const teamMembers: TeamMember[] = [
     name: '박대희',
     role: '팀원 소개 페이지 제작',
     bio: '팀원 소개 페이지 제작',
-    image: '/team3.png', // public 폴더 내 이미지
+    image: '/team3.png',
     email: 'park@example.com',
     social: {
       github: 'https://github.com/parkdaihee',
@@ -60,7 +59,7 @@ const teamMembers: TeamMember[] = [
     name: '최경규',
     role: '문의 페이지 제작, 로고와 아이콘 제작',
     bio: '문의 페이지제작, 프로젝트 아이디어 제시, 로고 및 아이콘등 제작',
-    image: '/team4.png', // public 폴더 내 이미지
+    image: '/team4.png',
     email: 'jeong@example.com',
     social: {
       github: 'https://github.com/rudrb',
@@ -72,7 +71,7 @@ const teamMembers: TeamMember[] = [
     name: '오건우',
     role: '프로젝트 디자인',
     bio: '프로젝트 디자인 참여',
-    image: '/team5.png', // public 폴더 내 이미지
+    image: '/team5.png',
     email: 'lee@example.com',
     social: {
       github: 'https://github.com/BigWales98',
@@ -84,7 +83,7 @@ const teamMembers: TeamMember[] = [
     name: '유선빈',
     role: '??',
     bio: '??',
-    image: '/team6.png', // public 폴더 내 이미지
+    image: '/team6.png',
     email: 'choi@example.com',
     social: {
       github: 'https://github.com/Rickyphantom',
@@ -99,7 +98,6 @@ export default function TeamPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedRole, setSelectedRole] = useState('')
 
-  // 검색된 팀원 목록 필터링
   const filteredMembers = teamMembers.filter(
     (member) =>
       member.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -108,14 +106,12 @@ export default function TeamPage() {
 
   return (
     <div className="bg-white text-gray-900 min-h-screen py-16 px-6">
-      {/* 헤더 */}
       <header className="text-center mb-12">
         <h1 className="text-4xl font-semibold text-blue-600">팀원 소개</h1>
         <p className="text-gray-700 mt-4 opacity-80">
           프로젝트를 함께한 팀원들
         </p>
 
-        {/* 검색 바 */}
         <div className="mt-6">
           <input
             type="text"
@@ -126,7 +122,6 @@ export default function TeamPage() {
           />
         </div>
 
-        {/* 역할 필터 */}
         <div className="mt-6">
           <select
             value={selectedRole}
@@ -148,7 +143,6 @@ export default function TeamPage() {
         </div>
       </header>
 
-      {/* 팀원 카드 섹션 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredMembers.map((member, index) => (
           <motion.div
@@ -160,7 +154,7 @@ export default function TeamPage() {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src={member.image} // 경로는 이미 변경됨
+              src={member.image}
               alt={member.name}
               width={120}
               height={120}
@@ -203,7 +197,6 @@ export default function TeamPage() {
         ))}
       </div>
 
-      {/* 모달 */}
       {selectedMember && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white text-gray-900 rounded-lg p-8 w-full max-w-md relative">
@@ -214,7 +207,7 @@ export default function TeamPage() {
               ✕
             </button>
             <Image
-              src={selectedMember.image} // 경로는 이미 변경됨
+              src={selectedMember.image}
               alt={selectedMember.name}
               width={120}
               height={120}

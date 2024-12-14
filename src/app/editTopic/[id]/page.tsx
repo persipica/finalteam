@@ -50,8 +50,8 @@ export default function EditTopicPage() {
   const uploadImageToCloudinary = async (image: File): Promise<string> => {
     const formData = new FormData()
     formData.append('file', image)
-    formData.append('upload_preset', 'ay1ovxr7') // Cloudinary에서 설정한 upload preset
-    formData.append('cloud_name', 'dkce7iuyq') // Cloudinary Cloud Name
+    formData.append('upload_preset', 'ay1ovxr7')
+    formData.append('cloud_name', 'dkce7iuyq')
 
     try {
       const res = await fetch(
@@ -62,7 +62,7 @@ export default function EditTopicPage() {
         }
       )
       const data = await res.json()
-      return data.secure_url // 업로드된 이미지 URL 반환
+      return data.secure_url
     } catch (error) {
       console.error('Cloudinary 이미지 업로드 실패:', error)
       throw new Error('이미지 업로드에 실패했습니다.')
@@ -75,14 +75,12 @@ export default function EditTopicPage() {
 
     try {
       setLoading(true)
-      let imageUrl = topic.image // 기존 이미지 URL
+      let imageUrl = topic.image
 
-      // 새 이미지를 업로드한 경우 Cloudinary에 업로드
       if (image) {
         imageUrl = await uploadImageToCloudinary(image)
       }
 
-      // JSON 형식으로 수정된 데이터 서버로 전송
       const payload = {
         title: topic.title,
         description: topic.description,
@@ -94,7 +92,7 @@ export default function EditTopicPage() {
       const res = await fetch(`/api/topics/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json', // JSON 데이터 전송
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       })
@@ -122,7 +120,6 @@ export default function EditTopicPage() {
         onSubmit={handleUpdate}
         className="border border-gray-300 rounded-lg bg-white shadow-lg p-6"
       >
-        {/* 상품 제목 */}
         <div className="mb-6">
           <label
             htmlFor="title"
@@ -140,7 +137,6 @@ export default function EditTopicPage() {
           />
         </div>
 
-        {/* 상품 설명 */}
         <div className="mb-6">
           <label
             htmlFor="description"
@@ -159,7 +155,6 @@ export default function EditTopicPage() {
           ></textarea>
         </div>
 
-        {/* 상품 가격 */}
         <div className="mb-6">
           <label
             htmlFor="price"
@@ -179,7 +174,6 @@ export default function EditTopicPage() {
           />
         </div>
 
-        {/* 카테고리 선택 */}
         <div className="mb-6">
           <label
             htmlFor="category"
@@ -203,7 +197,6 @@ export default function EditTopicPage() {
           </select>
         </div>
 
-        {/* 이미지 업로드 */}
         <div className="mb-6">
           <label
             htmlFor="image"
@@ -234,7 +227,6 @@ export default function EditTopicPage() {
           </div>
         )}
 
-        {/* 수정 버튼 */}
         <button
           type="submit"
           className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg"

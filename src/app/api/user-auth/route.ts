@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const userExists = await User.findOne({ email })
     if (!userExists) {
       await User.create({ name, email })
-    } // Log the login event
+    }
     const apiUrl = process.env.API_URL
     await fetch(`${apiUrl}/api/log`, {
       method: 'POST',

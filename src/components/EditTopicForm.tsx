@@ -1,5 +1,3 @@
-// src/app/editTopic/[id]/page.tsx
-
 'use client'
 
 import React, { useState } from 'react'
@@ -35,7 +33,7 @@ const EditTopicForm: React.FC<EditTopicFormProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-    setError(null) // 에러 초기화
+    setError(null)
 
     const formData = new FormData()
     formData.append('title', newTitle)
@@ -50,7 +48,7 @@ const EditTopicForm: React.FC<EditTopicFormProps> = ({
       })
 
       if (res.ok) {
-        router.push('/') // 수정 성공 후 홈으로 리다이렉트
+        router.push('/')
       } else {
         const result = await res.json()
         setError(result.message || '상품 수정에 실패했습니다.')

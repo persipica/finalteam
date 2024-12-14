@@ -2,7 +2,6 @@ import connectMongoDB from '@/libs/mongodb'
 import Topic from '@/models/topic'
 import { NextRequest, NextResponse } from 'next/server'
 
-// 가능한 카테고리 값들
 const validCategories = [
   '가전제품',
   '문구(완구)',
@@ -12,7 +11,6 @@ const validCategories = [
   '기타',
 ]
 
-// POST 메서드: Topic 생성
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -48,7 +46,7 @@ export async function POST(request: NextRequest) {
       category,
       image: image || null,
       userEmail,
-      views: 0, // 기본 조회수 0으로 설정
+      views: 0,
     })
 
     return NextResponse.json(
@@ -64,14 +62,13 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET 메서드: 모든 Topic 조회
 export async function GET() {
   try {
     await connectMongoDB()
 
-    const topics = await Topic.find() // 모든 Topic 조회
+    const topics = await Topic.find()
 
-    return NextResponse.json({ topics }, { status: 200 }) // 조회수 포함된 데이터 반환
+    return NextResponse.json({ topics }, { status: 200 })
   } catch (error) {
     console.error('Error in GET /api/topics:', error)
     return NextResponse.json(

@@ -13,17 +13,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET, // 반드시 설정 필요
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/login', // 커스텀 로그인 페이지 (선택)
+    signIn: '/login',
   },
   callbacks: {
     async signIn({ user, account }) {
       console.log('Sign-in Callback:', { user, account })
       if (account?.provider === 'google' || account?.provider === 'github') {
-        return true // 권한 검사 후 true 반환
+        return true
       }
-      return false // 기본적으로 false 반환
+      return false
     },
     async redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? url : baseUrl

@@ -63,7 +63,6 @@ export default function FavoritesList({ userEmail }: { userEmail: string }) {
   return (
     <div>
       <h2 className="text-2xl font-semibold">찜한 상품</h2>
-      {/* 찜한 상품이 없으면 메시지 표시 */}
       {favorites.length === 0 ? (
         <p className="text-gray-500 mt-4">찜한 상품이 없습니다...</p>
       ) : (
@@ -91,7 +90,6 @@ export default function FavoritesList({ userEmail }: { userEmail: string }) {
                   </div>
                 )}
                 <div className="p-4 flex justify-between">
-                  {/* 상품 정보 */}
                   <div className="flex-1 pr-4">
                     <h3 className="text-lg font-semibold text-black">
                       {favorite.topicId.title}
@@ -109,7 +107,6 @@ export default function FavoritesList({ userEmail }: { userEmail: string }) {
                       {favorite.topicId.price.toLocaleString()} 원
                     </p>
                   </div>
-                  {/* 등록 시간 및 조회수 */}
                   <div className="flex flex-col items-end justify-between">
                     <p className="text-xs text-gray-500">
                       {getRelativeTime(favorite.topicId.createdAt)}

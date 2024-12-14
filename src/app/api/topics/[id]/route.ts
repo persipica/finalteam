@@ -22,12 +22,10 @@ export const GET = async (
       )
     }
 
-    const userEmail = req.headers.get('x-user-email') // 헤더에서 사용자 이메일 가져오기
+    const userEmail = req.headers.get('x-user-email')
     if (userEmail) {
-      // 조회 기록 확인
       const existingView = await View.findOne({ topicId: params.id, userEmail })
       if (!existingView) {
-        // 조회수 증가 및 조회 기록 생성
         topic.views = (topic.views || 0) + 1
         await topic.save()
 
@@ -40,7 +38,7 @@ export const GET = async (
       console.log('사용자 이메일 없음. 조회수 증가 건너뜀.')
     }
 
-    return NextResponse.json(topic) // 상품 정보를 JSON으로 반환
+    return NextResponse.json(topic)
   } catch (error) {
     console.error('조회수 증가 중 오류 발생:', error)
     return NextResponse.json(
@@ -57,9 +55,8 @@ export const PATCH = async (
   try {
     await connectMongoDB()
     const { id } = params
-    const { status } = await req.json() // 요청에서 status 값 추출
+    const { status } = await req.json()
 
-    // 상태 값 유효성 검사
     const validStatuses = ['판매중', '예약중', '판매완료']
     if (!validStatuses.includes(status)) {
       return NextResponse.json(
@@ -68,7 +65,6 @@ export const PATCH = async (
       )
     }
 
-    // 상품 조회
     const topic = await Topic.findById(id)
     if (!topic) {
       return NextResponse.json(
@@ -77,7 +73,6 @@ export const PATCH = async (
       )
     }
 
-    // 상태 업데이트
     topic.status = status
     await topic.save()
 

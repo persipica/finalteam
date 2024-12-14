@@ -8,7 +8,6 @@ export default async function Home() {
 
     return (
       <div>
-        {/* 배너 섹션 */}
         <div className="relative h-[400px]">
           <div
             className="absolute inset-0 bg-cover bg-center"

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import Comment from '@/models/Comment'
-import Topic from '@/models/topic' // Topic 모델 추가
+import Topic from '@/models/topic'
 import connectMongoDB from '@/libs/mongodb'
 
 export const GET = async (req: Request) => {
@@ -17,18 +17,16 @@ export const GET = async (req: Request) => {
 
     await connectMongoDB()
 
-    // 해당 topicId의 상품 정보 가져오기
     const topic = await Topic.findById(topicId)
     if (!topic) {
       return NextResponse.json({ message: 'Topic not found' }, { status: 404 })
     }
 
-    // 해당 topicId의 댓글 가져오기
     const comments = await Comment.find({ topicId }).sort({ createdAt: -1 })
 
     return NextResponse.json({
       comments,
-      sellerEmail: topic.userEmail, // 상품 등록자의 이메일 추가
+      sellerEmail: topic.userEmail,
     })
   } catch (error) {
     console.error('Error fetching comments:', error)
@@ -52,7 +50,6 @@ export const POST = async (req: Request) => {
 
     await connectMongoDB()
 
-    // 댓글 생성
     const newComment = new Comment({
       content,
       userEmail,

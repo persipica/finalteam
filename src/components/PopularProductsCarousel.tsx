@@ -9,7 +9,7 @@ interface Topic {
   title: string
   price: number
   image?: string
-  views?: number // 조회수 필드가 있을 수 있음
+  views?: number
 }
 
 interface Product {
@@ -17,32 +17,30 @@ interface Product {
   title: string
   price: number
   image?: string
-  views: number // 조회수는 반드시 존재하는 값
+  views: number
 }
 
 export default function PopularProductsCarousel({
   products,
 }: {
-  products: Topic[] // Topic[] 타입을 받음
+  products: Topic[]
 }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Topic을 Product로 변환
   const convertTopicToProduct = (topic: Topic): Product => {
     return {
       _id: topic._id,
       title: topic.title,
       price: topic.price,
       image: topic.image,
-      views: topic.views ?? 0, // views가 없으면 0으로 처리
+      views: topic.views ?? 0,
     }
   }
 
-  // 조회수를 기준으로 상위 5개의 인기 상품을 필터링
   const popularProducts = [...products]
-    .map(convertTopicToProduct) // Topic을 Product로 변환
-    .sort((a, b) => b.views - a.views) // 조회수 내림차순 정렬
-    .slice(0, 5) // 상위 5개 상품만 선택
+    .map(convertTopicToProduct)
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 5)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -51,7 +49,7 @@ export default function PopularProductsCarousel({
       )
     }, 6000)
 
-    return () => clearInterval(timer) // 컴포넌트 언마운트 시 타이머 정리
+    return () => clearInterval(timer)
   }, [popularProducts.length])
 
   const handlePrev = () => {
@@ -70,7 +68,6 @@ export default function PopularProductsCarousel({
 
   return (
     <div className="relative w-full overflow-hidden">
-      {/* 슬라이드 컨테이너 */}
       <div
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -98,7 +95,6 @@ export default function PopularProductsCarousel({
         ))}
       </div>
 
-      {/* 왼쪽 화살표 */}
       <button
         className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 text-white p-4 rounded-full opacity-40 hover:opacity-75 transition-opacity duration-200"
         onClick={handlePrev}
@@ -106,7 +102,6 @@ export default function PopularProductsCarousel({
         &#8592;
       </button>
 
-      {/* 오른쪽 화살표 */}
       <button
         className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 text-white p-4 rounded-full opacity-40 hover:opacity-75 transition-opacity duration-200"
         onClick={handleNext}

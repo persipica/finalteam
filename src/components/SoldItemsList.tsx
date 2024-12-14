@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react' // 로그인 상태 확인
+import { useSession } from 'next-auth/react'
 import { FaEye } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -17,11 +17,11 @@ interface Topic {
   views?: number
   createdAt?: Date
   updatedAt?: Date
-  status: string // 판매 상태 (판매중, 판매완료 등)
+  status: string
 }
 
 export default function SoldTopicLists() {
-  const { data: session } = useSession() // 로그인한 사용자 정보 가져오기
+  const { data: session } = useSession()
   const [topics, setTopics] = useState<Topic[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -35,7 +35,6 @@ export default function SoldTopicLists() {
         }
         const data = await res.json()
 
-        // 로그인한 사용자의 이메일과 판매 완료 여부 필터링
         if (session) {
           const soldTopics = data.topics.filter(
             (topic: Topic) =>
@@ -52,7 +51,7 @@ export default function SoldTopicLists() {
       }
     }
     fetchSoldTopics()
-  }, [session]) // session이 변경될 때마다 실행
+  }, [session])
 
   function getRelativeTime(createdAt: string | undefined) {
     if (!createdAt) return ''
@@ -81,7 +80,7 @@ export default function SoldTopicLists() {
     return (
       <div className="flex justify-center items-center h-64">
         <Image
-          src="/loading.gif" // 사용할 GIF 파일 경로
+          src="/loading.gif"
           alt="Loading animation"
           width={200}
           height={200}
@@ -118,7 +117,6 @@ export default function SoldTopicLists() {
                 </div>
               )}
               <div className="p-4 flex justify-between">
-                {/* 상품 정보 */}
                 <div className="flex-1 pr-4">
                   <h3 className="text-lg font-semibold text-black">
                     {topic.title}
@@ -134,7 +132,7 @@ export default function SoldTopicLists() {
                     {topic.price.toLocaleString()} 원
                   </p>
                 </div>
-                {/* 등록 시간 및 조회수 */}
+
                 <div className="flex flex-col items-end justify-between">
                   <p className="text-xs text-gray-500">
                     {getRelativeTime(topic.createdAt?.toString())}

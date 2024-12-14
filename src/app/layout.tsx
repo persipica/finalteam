@@ -29,9 +29,7 @@ export const metadata: Metadata = {
       { url: '/icon-48.png', sizes: '48x48', type: 'image/png' },
       { url: '/icon.png', sizes: '192x192', type: 'image/png' },
     ],
-    // Apple 기기를 위한 설정
     apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
-    // 파비콘도 추가
     shortcut: [{ url: '/favicon.ico' }],
   },
 }
@@ -51,7 +49,6 @@ export default function RootLayout({
             <header className="bg-[#1A1A1A] text-white">
               <div className="container mx-auto px-4 py-6">
                 <div className="flex items-center justify-between">
-                  {/* 로고와 브랜드명 */}
                   <Link href="/" className="flex items-center space-x-4">
                     <Image
                       src="/logo.png"
@@ -69,12 +66,9 @@ export default function RootLayout({
                       </span>
                     </div>
                   </Link>
-
-                  {/* Navbar만 표시 */}
                   <Navbar />
                 </div>
               </div>
-              {/* 골드 구분선 추가 */}
               <div className="h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent"></div>
             </header>
 

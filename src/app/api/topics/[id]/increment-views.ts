@@ -17,14 +17,11 @@ const incrementViews = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { db } = await connectMongoDB()
 
-    // id를 ObjectId로 변환
     const objectId = new ObjectId(id as string)
 
-    // 조회수 증가
-    const result = await db.collection('topics').updateOne(
-      { _id: objectId }, // ObjectId 타입으로 _id 필드 처리
-      { $inc: { views: 1 } } // 조회수 증가
-    )
+    const result = await db
+      .collection('topics')
+      .updateOne({ _id: objectId }, { $inc: { views: 1 } })
 
     if (result.matchedCount === 0) {
       return res.status(404).json({ error: 'Topic not found' })

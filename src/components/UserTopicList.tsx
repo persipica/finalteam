@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react' // 로그인 상태 확인
+import { useSession } from 'next-auth/react'
 import { FaEye } from 'react-icons/fa'
 import Link from 'next/link'
 
@@ -13,16 +13,16 @@ interface Topic {
   description: string
   createdAt: string
   updatedAt: string
-  image?: string // 상품 이미지를 추가할 수 있도록 필드 확장
+  image?: string
   price: number
-  userEmail: string // 상품 등록한 사용자의 이메일 추가
-  category: string // 카테고리 필드 추가
+  userEmail: string
+  category: string
   views?: number
   status: string
 }
 
 export default function TopicLists() {
-  const { data: session } = useSession() // 로그인한 사용자 정보 가져오기
+  const { data: session } = useSession()
   const [topics, setTopics] = useState<Topic[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -36,7 +36,6 @@ export default function TopicLists() {
         }
         const data = await res.json()
 
-        // 로그인한 사용자의 이메일만 필터링
         if (session) {
           const userTopics = data.topics.filter(
             (topic: Topic) => topic.userEmail === session.user?.email
@@ -51,7 +50,7 @@ export default function TopicLists() {
       }
     }
     fetchTopics()
-  }, [session]) // session이 변경될 때마다 실행
+  }, [session])
 
   function getRelativeTime(createdAt: string) {
     const now = new Date()
@@ -79,7 +78,7 @@ export default function TopicLists() {
     return (
       <div className="flex justify-center items-center h-64">
         <Image
-          src="/loading.gif" // 사용할 GIF 파일 경로
+          src="/loading.gif"
           alt="Loading animation"
           width={200}
           height={200}
@@ -116,7 +115,6 @@ export default function TopicLists() {
                 </div>
               )}
               <div className="p-4 flex justify-between">
-                {/* 상품 정보 */}
                 <div className="flex-1 pr-4">
                   <h3 className="text-lg font-semibold text-black">
                     {topic.title}
@@ -132,7 +130,6 @@ export default function TopicLists() {
                     {topic.price.toLocaleString()} 원
                   </p>
                 </div>
-                {/* 등록 시간 및 조회수 */}
                 <div className="flex flex-col items-end justify-between">
                   <p className="text-xs text-gray-500">
                     {getRelativeTime(topic.createdAt)}

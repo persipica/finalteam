@@ -76,7 +76,7 @@ export default function ChatPage() {
     }
   }
 
-  if (loading) return <div>Loading...</div> // 로딩 중일 때 표시
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="container mx-auto my-8 max-w-4xl">

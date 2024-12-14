@@ -4,7 +4,6 @@
   margin: 20px;
 }
 
-/* 목차 스타일 */
 .toc {
   border: 1px solid #ddd;
   padding: 10px;
@@ -36,7 +35,6 @@
   text-decoration: underline;
 }
 
-/* 섹션 스타일 */
 .section {
   margin-top: 30px;
 }
@@ -62,23 +60,20 @@
   margin-left: 20px;
 }
 
-/* 이미지 스타일 */
 .featureImage {
   width: 100%;
-  max-width: 600px; /* 최대 이미지 크기 설정 */
+  max-width: 600px;
   margin: 20px 0;
   display: block;
-  object-fit: cover; /* 이미지 비율 맞추기 */
+  object-fit: cover;
 }
 
-/* 기능 설명 부분과 이미지가 나란히 배치될 수 있도록 */
 .featureContent {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* 제목 옆 숫자 링크 스타일 */
 .backToTopLink {
   color: #0070f3;
   font-size: 14px;

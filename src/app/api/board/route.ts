@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import connectMongoDB from '@/libs/mongodb'
-import Board from '@/models/board' // 새로운 Board 모델 필요
+import Board from '@/models/board'
 
 export async function POST(request: Request) {
   try {

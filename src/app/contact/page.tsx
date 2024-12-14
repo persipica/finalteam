@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react' // 필요 시 React 임포트
+import React from 'react'
 
 export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.target as HTMLFormElement) // HTMLFormElement로 타입 명시
+    const formData = new FormData(e.target as HTMLFormElement)
 
     try {
       const response = await fetch('/api/contact', {

@@ -9,14 +9,14 @@ export default function AddTopicPage() {
   const router = useRouter()
 
   if (!session) {
-    redirect('/login') // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+    redirect('/login')
   }
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [price, setPrice] = useState<number | string>('') // 상품 가격 상태
+  const [price, setPrice] = useState<number | string>('')
   const [image, setImage] = useState<File | null>(null)
-  const [category, setCategory] = useState('') // 카테고리 상태
+  const [category, setCategory] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,15 +25,15 @@ export default function AddTopicPage() {
   }
 
   /**
-   * Cloudinary에 이미지를 업로드하는 함수
-   * @param image 업로드할 이미지 파일
-   * @returns 업로드된 이미지의 URL
+   *
+   * @param image
+   * @returns
    */
   const uploadImageToCloudinary = async (image: File): Promise<string> => {
     const formData = new FormData()
     formData.append('file', image)
-    formData.append('upload_preset', 'ay1ovxr7') // Cloudinary에서 설정한 upload preset
-    formData.append('cloud_name', 'dkce7iuyq') // Cloudinary Cloud Name
+    formData.append('upload_preset', 'ay1ovxr7')
+    formData.append('cloud_name', 'dkce7iuyq')
 
     try {
       const res = await fetch(
@@ -44,7 +44,7 @@ export default function AddTopicPage() {
         }
       )
       const data = await res.json()
-      return data.secure_url // 업로드된 이미지 URL 반환
+      return data.secure_url
     } catch (error) {
       console.error('Cloudinary 이미지 업로드 실패:', error)
       throw new Error('이미지 업로드에 실패했습니다.')
@@ -63,18 +63,16 @@ export default function AddTopicPage() {
     let imageUrl = ''
 
     try {
-      // 이미지가 있을 경우 Cloudinary에 업로드
       if (image) {
         imageUrl = await uploadImageToCloudinary(image)
       }
 
-      // 상품 데이터 서버로 전송
       const payload = {
         title,
         description,
         price,
         category,
-        image: imageUrl, // 업로드된 Cloudinary 이미지 URL
+        image: imageUrl,
         userEmail: session?.user?.email || '',
       }
 
@@ -88,7 +86,7 @@ export default function AddTopicPage() {
 
       if (res.ok) {
         alert('상품이 성공적으로 등록되었습니다.')
-        router.push('/') // 상품 등록 후 홈으로 리다이렉트
+        router.push('/')
       } else {
         throw new Error('상품 등록에 실패했습니다.')
       }
@@ -106,7 +104,6 @@ export default function AddTopicPage() {
         className="border border-gray-300 rounded-lg bg-white shadow-lg p-6"
         onSubmit={handleSubmit}
       >
-        {/* 상품 이미지 */}
         <div className="mb-6">
           <label
             htmlFor="image"
@@ -125,7 +122,6 @@ export default function AddTopicPage() {
           </div>
         </div>
 
-        {/* 상품명 */}
         <div className="mb-6">
           <label
             htmlFor="title"
@@ -145,7 +141,6 @@ export default function AddTopicPage() {
           />
         </div>
 
-        {/* 상품 설명 */}
         <div className="mb-6">
           <label
             htmlFor="description"
@@ -164,7 +159,6 @@ export default function AddTopicPage() {
           />
         </div>
 
-        {/* 상품 가격 */}
         <div className="mb-6">
           <label
             htmlFor="price"
@@ -184,7 +178,6 @@ export default function AddTopicPage() {
           />
         </div>
 
-        {/* 카테고리 */}
         <div className="mb-6">
           <label
             htmlFor="category"
@@ -210,7 +203,6 @@ export default function AddTopicPage() {
           </select>
         </div>
 
-        {/* 등록 버튼 */}
         <button
           type="submit"
           disabled={loading}

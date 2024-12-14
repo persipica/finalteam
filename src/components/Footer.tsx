@@ -1,6 +1,5 @@
-// components/Footer.tsx
 import React from 'react'
-import Link from 'next/link' // Link 컴포넌트 추가
+import Link from 'next/link'
 
 const Footer: React.FC = () => {
   return (
@@ -33,7 +32,7 @@ const Footer: React.FC = () => {
                     <a
                       className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                       href="https://github.com/persipica"
-                      target="_blank" // 외부 링크 처리
+                      target="_blank"
                       rel="noopener noreferrer"
                     >
                       Github

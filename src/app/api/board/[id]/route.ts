@@ -14,7 +14,6 @@ export async function GET(
       return NextResponse.json({ error: 'Board not found' }, { status: 404 })
     }
 
-    // 조회수 증가
     board.views = (board.views || 0) + 1
     await board.save()
 
@@ -50,7 +49,6 @@ export async function PUT(
 
     return NextResponse.json(updatedBoard)
   } catch (err) {
-    // error를 err로 변경하고 콘솔에 로깅
     console.error('Error updating board:', err)
     return NextResponse.json(
       { message: 'ê²ìê¸ ìì  ì¤ ì¤ë¥ê° ë°ìíìµëë¤.' },
@@ -78,7 +76,6 @@ export async function DELETE(
 
     return NextResponse.json({ message: '게시글이 삭제되었습니다.' })
   } catch (err) {
-    // error를 err로 변경하고 콘솔에 로깅
     console.error('Error deleting board:', err)
     return NextResponse.json(
       { message: 'ê²ìê¸ ì­ì  ì¤ ì¤ë¥ê° ë°ìíìµëë¤.' },

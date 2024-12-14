@@ -8,12 +8,12 @@ import {
   FiInfo,
   FiArrowUp,
   FiPlus,
-  FiHelpCircle, // 추가된 아이콘
+  FiHelpCircle,
 } from 'react-icons/fi'
 import { useSession } from 'next-auth/react'
 
 export default function FloatingSidebar() {
-  const { status } = useSession() // 세션 정보 가져오기
+  const { status } = useSession()
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })

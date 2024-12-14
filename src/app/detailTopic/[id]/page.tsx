@@ -17,7 +17,7 @@ interface Topic {
   userEmail: string
   category: string
   views?: number
-  status: string // 상품 상태 추가
+  status: string
 }
 
 interface Comment {
@@ -33,7 +33,7 @@ export default function TopicDetailPage() {
   const id = Array.isArray(params?.id) ? params?.id[0] : params?.id
   const [topic, setTopic] = useState<Topic | null>(null)
   const [loading, setLoading] = useState(true)
-  const [status, setStatus] = useState('판매중') // 상품 상태 관리 추가
+  const [status, setStatus] = useState('판매중')
   const [comments, setComments] = useState<Comment[]>([])
   const [newComment, setNewComment] = useState('')
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null)
@@ -52,7 +52,7 @@ export default function TopicDetailPage() {
         const res = await fetch(`/api/topics/${id}`, {
           method: 'GET',
           headers: {
-            'x-user-email': userEmail || '', // userEmail을 헤더에 포함
+            'x-user-email': userEmail || '',
           },
         })
         if (!res.ok) throw new Error('Failed to fetch topic')
@@ -63,7 +63,7 @@ export default function TopicDetailPage() {
         const commentRes = await fetch(`/api/comments?topicId=${id}`, {
           method: 'GET',
           headers: {
-            'x-user-email': userEmail || '', // 동일하게 댓글 요청에도 헤더 추가
+            'x-user-email': userEmail || '',
           },
         })
         if (!commentRes.ok) throw new Error('Failed to fetch comments')
@@ -113,11 +113,10 @@ export default function TopicDetailPage() {
   }, [id, userEmail])
 
   useEffect(() => {
-    if (!id || !userEmail) return // id와 userEmail이 모두 필요하므로 한 번만 체크
+    if (!id || !userEmail) return
 
-    console.log('id:', id, 'userEmail:', userEmail) // 로그 추가
+    console.log('id:', id, 'userEmail:', userEmail)
 
-    // 조회수 증가
     const incrementViews = async (id: string, userEmail: string) => {
       try {
         const res = await fetch(`/api/topics/${id}/increment-views`, {
@@ -125,7 +124,7 @@ export default function TopicDetailPage() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userEmail }), // body에 userEmail 포함
+          body: JSON.stringify({ userEmail }),
         })
 
         if (!res.ok) {
@@ -138,7 +137,7 @@ export default function TopicDetailPage() {
     }
 
     incrementViews(id, userEmail)
-  }, [id, userEmail]) // dependency 배열을 추가하여 id, userEmail이 바뀔 때마다 실행
+  }, [id, userEmail])
 
   const handleImageClick = (image: string) => {
     setModalImage(image)
@@ -224,7 +223,7 @@ export default function TopicDetailPage() {
   }
 
   const handleStatusChange = async (newStatus: string) => {
-    if (!topic) return // topic이 null일 경우를 처리
+    if (!topic) return
 
     try {
       const res = await fetch(`/api/topics/${id}`, {
@@ -237,10 +236,9 @@ export default function TopicDetailPage() {
 
       const data = await res.json()
 
-      // 타입을 명시적으로 지정하여 안전하게 업데이트
       setTopic((prev) => ({
-        ...(prev as Topic), // 기존 topic 객체를 유지
-        status: data.status, // 새 상태만 업데이트
+        ...(prev as Topic),
+        status: data.status,
       }))
     } catch (error) {
       console.error('Error updating status:', error)
@@ -279,7 +277,7 @@ export default function TopicDetailPage() {
     return (
       <div className="flex justify-center items-center h-64">
         <Image
-          src="/loading.gif" // 사용할 GIF 파일 경로
+          src="/loading.gif"
           alt="Loading animation"
           width={200}
           height={200}
@@ -290,7 +288,7 @@ export default function TopicDetailPage() {
     return (
       <div className="flex justify-center items-center h-64">
         <Image
-          src="/loading.gif" // 사용할 GIF 파일 경로
+          src="/loading.gif"
           alt="Loading animation"
           width={200}
           height={200}
@@ -306,7 +304,6 @@ export default function TopicDetailPage() {
         <h1 className="text-2xl font-bold mb-4 text-gray-800">{topic.title}</h1>
         {topic.image && (
           <div className="flex justify-center mb-6 relative">
-            {/* 이미지 블러 처리 */}
             <Image
               src={topic.image}
               alt={topic.title}
@@ -317,7 +314,7 @@ export default function TopicDetailPage() {
               }`}
               onClick={() => handleImageClick(topic.image!)}
             />
-            {/* 상태 메시지 표시 */}
+
             {status !== '판매중' && (
               <span className="absolute inset-0 flex justify-center items-center text-white text-xl font-bold bg-black bg-opacity-50">
                 {status}
@@ -352,7 +349,6 @@ export default function TopicDetailPage() {
 
       {isOwner && (
         <div className="flex justify-end mb-6">
-          {/* 상태 변경 드롭다운 */}
           <select
             value={status}
             onChange={(e) => handleStatusChange(e.target.value)}

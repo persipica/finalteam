@@ -1,4 +1,3 @@
-// src/app/api/comments/[id]/route.ts
 import { NextResponse } from 'next/server'
 
 import Comment from '@/models/Comment'
@@ -21,11 +20,10 @@ export const PUT = async (
 
     await connectMongoDB()
 
-    // 댓글 수정
     const updatedComment = await Comment.findByIdAndUpdate(
       id,
       { content },
-      { new: true } // 수정된 데이터 반환
+      { new: true }
     )
 
     if (!updatedComment) {
@@ -54,7 +52,6 @@ export const DELETE = async (
 
     await connectMongoDB()
 
-    // 댓글 삭제
     const deletedComment = await Comment.findByIdAndDelete(id)
 
     if (!deletedComment) {

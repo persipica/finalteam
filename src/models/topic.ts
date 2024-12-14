@@ -1,4 +1,3 @@
-// src/models/topic.ts
 import mongoose, { Schema, Model } from 'mongoose'
 
 interface ITopic {
@@ -22,7 +21,7 @@ const topicSchema = new Schema<ITopic>(
     image: { type: String },
     userEmail: { type: String, required: true },
     category: { type: String, required: true },
-    views: { type: Number, default: 0 }, // 조회수 필드 추가
+    views: { type: Number, default: 0 },
     status: { type: String, default: '판매중' },
   },
   {

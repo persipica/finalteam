@@ -29,12 +29,10 @@ export default function TopicLists() {
   const [dateSortOrder, setDateSortOrder] = useState<string>('desc')
   const [searchQuery, setSearchQuery] = useState<string>('')
 
-  // 인기 상품 슬라이드를 위한 상태
   const [popularTopics, setPopularTopics] = useState<Topic[]>([])
 
-  // 페이지네이션 관련 상태
-  const [currentPage, setCurrentPage] = useState<number>(1) // 현재 페이지 번호
-  const itemsPerPage = 8 // 한 페이지에 표시할 상품 개수
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const itemsPerPage = 8
 
   useEffect(() => {
     async function fetchTopics() {
@@ -45,13 +43,11 @@ export default function TopicLists() {
         }
         const data = await res.json()
 
-        // TypeScript가 topics의 타입을 알 수 있도록 명시적으로 설정
         setTopics(data.topics)
 
-        // 인기 상품 설정: 조회수 기준으로 상위 5개 상품
         const sortedTopics = data.topics
-          .sort((a: Topic, b: Topic) => (b.views ?? 0) - (a.views ?? 0)) // 조회수 내림차순 정렬
-          .slice(0, 5) // 상위 5개 선택
+          .sort((a: Topic, b: Topic) => (b.views ?? 0) - (a.views ?? 0))
+          .slice(0, 5)
         setPopularTopics(sortedTopics)
       } catch (error) {
         console.error('Error loading topics: ', error)
@@ -78,24 +74,21 @@ export default function TopicLists() {
     })
     .sort((a, b) => {
       if (priceSortOrder) {
-        // 가격 정렬
         return priceSortOrder === 'asc' ? a.price - b.price : b.price - a.price
       }
       if (dateSortOrder) {
-        // 날짜 정렬
         return dateSortOrder === 'asc'
           ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
           : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       }
-      return 0 // 기본 정렬 유지
+      return 0
     })
 
-  // 페이지네이션에 따른 데이터 분리
-  const totalItems = filteredTopics.length // 필터링된 총 상품 개수
-  const totalPages = Math.ceil(totalItems / itemsPerPage) // 전체 페이지 수 계산
-  const startIndex = (currentPage - 1) * itemsPerPage // 현재 페이지의 시작 인덱스
-  const endIndex = startIndex + itemsPerPage // 현재 페이지의 끝 인덱스
-  const paginatedTopics = filteredTopics.slice(startIndex, endIndex) // 현재 페이지에 해당하는 상품 목록
+  const totalItems = filteredTopics.length
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const paginatedTopics = filteredTopics.slice(startIndex, endIndex)
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
@@ -127,7 +120,7 @@ export default function TopicLists() {
     return (
       <div className="flex justify-center items-center h-64">
         <Image
-          src="/loading.gif" // 사용할 GIF 파일 경로
+          src="/loading.gif"
           alt="Loading animation"
           width={200}
           height={200}
@@ -138,15 +131,13 @@ export default function TopicLists() {
 
   return (
     <div className="container mx-auto my-8">
-      {/* 인기 상품 슬라이드 */}
       {popularTopics.length > 0 && (
         <div className="mb-6">
           <h2 className="text-2xl font-bold mb-4">인기 상품</h2>
           <PopularProductsCarousel products={popularTopics} />{' '}
-          {/* 인기상품 슬라이드 컴포넌트 추가 */}
         </div>
       )}
-      {/* 필터, 정렬 UI */}
+
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <div>
           <label htmlFor="category" className="mr-2">
@@ -177,7 +168,7 @@ export default function TopicLists() {
             value={priceSortOrder}
             onChange={(e) => {
               setPriceSortOrder(e.target.value)
-              setDateSortOrder('') // 날짜 정렬 초기화
+              setDateSortOrder('')
             }}
             className="border border-gray-300 rounded-md p-2"
           >
@@ -195,7 +186,7 @@ export default function TopicLists() {
             value={dateSortOrder}
             onChange={(e) => {
               setDateSortOrder(e.target.value)
-              setPriceSortOrder('') // 가격 정렬 초기화
+              setPriceSortOrder('')
             }}
             className="border border-gray-300 rounded-md p-2"
           >
@@ -215,7 +206,6 @@ export default function TopicLists() {
         </div>
       </div>
 
-      {/* 상품 목록 */}
       {paginatedTopics.length === 0 ? (
         <p className="text-gray-500 mt-4">등록된 상품이 없습니다...</p>
       ) : (
@@ -247,7 +237,6 @@ export default function TopicLists() {
                   </div>
                 )}
                 <div className="p-4 flex justify-between">
-                  {/* 왼쪽 영역 (제목, 설명, 카테고리, 가격) */}
                   <div className="flex-1 pr-4">
                     <h3 className="text-lg font-semibold text-black">
                       {topic.title}
@@ -265,8 +254,6 @@ export default function TopicLists() {
                       {topic.price.toLocaleString()} 원
                     </p>
                   </div>
-
-                  {/* 오른쪽 영역 (조회수, 등록시간) */}
                   <div className="flex flex-col items-end justify-between">
                     <p className="text-xs text-gray-500">
                       {getRelativeTime(topic.createdAt)}
@@ -283,7 +270,6 @@ export default function TopicLists() {
         </div>
       )}
 
-      {/* 페이지네이션 */}
       <div className="flex justify-center mt-8">
         <nav>
           <ul className="flex space-x-4">
