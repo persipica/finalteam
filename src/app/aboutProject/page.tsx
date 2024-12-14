@@ -8,30 +8,35 @@ const features = [
     id: 'login',
     description:
       '사용자는 로그인 페이지에서 구글 계정 또는 깃허브 계정을 통해 로그인 할 수 있습니다. ',
+    image: '/images/login-image.jpg', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '상품 등록',
     id: 'product-registration',
     description:
       '사용자는 직관적인 UI를 통해 간편하게 상품을 등록하고, 사진 및 상세 정보를 추가할 수 있습니다.',
+    image: '/images/product-registration-image.jpg', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '상품 상세페이지',
     id: 'product-detail',
     description:
       '사용자는 상품 상세페이지에서 자신이 등록한 상품이라면 수정, 삭제기능과 상품의 판매 상태를 설정할 수 있으며, 자신이 등록하지 않은 상품에 대해서는 찜하기 기능을 사용할 수 있습니다.',
+    image: '/images/product-detail-image.jpg', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '댓글',
     id: 'comment',
     description:
       '사용자는 상품 상세페이지 하단의 댓글 영역에 댓글을 작성할 수 있으며, 자신이 등록한 댓글에 대해서는 수정과 삭제 기능을 이용할 수 있습니다. 또한 자신의 상품에 댓글을 단 경우라면 판매자 라고 표시됩니다. 해당 댓글 기능 통해 판매자와 구매자간의 소통이 가능하며 이를 바탕으로 거래를 진행할 수 있습니다.',
+    image: '/images/comment-image.jpg', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '마이페이지',
     id: 'mypage',
     description:
       '사용자는 마이페이지에서 자신의 간단한 정보와 자신이 등록한 상품, 판매한 상품, 찜한 상품을 리스트형식으로 확인할 수 있습니다.',
+    image: '/images/mypage-image.jpg', // 여기에 적절한 이미지 경로 추가
   },
 ]
 
@@ -43,7 +48,7 @@ export default function WikiPage() {
       </section>
 
       {/* 목차 */}
-      <div className={styles.toc}>
+      <div id="toc" className={styles.toc}>
         <h2>목차</h2>
         <ul>
           <li>
@@ -84,8 +89,19 @@ export default function WikiPage() {
           <div key={feature.id} id={feature.id} className={styles.featureItem}>
             <h2 className={styles.featureTitle}>
               2.{index + 1} {feature.title}
+              {/* 각 제목 옆에 숫자 클릭 시 목차로 돌아가는 링크 추가 */}
+              <a href="#toc" className={styles.backToTopLink}>
+                {index + 1}
+              </a>
             </h2>
-            <p className={styles.featureDescription}>{feature.description}</p>
+            <div className={styles.featureContent}>
+              <img
+                src={feature.image}
+                alt={feature.title}
+                className={styles.featureImage}
+              />
+              <p className={styles.featureDescription}>{feature.description}</p>
+            </div>
           </div>
         ))}
       </section>
