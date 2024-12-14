@@ -8,35 +8,56 @@ const features = [
     id: 'login',
     description:
       '사용자는 로그인 페이지에서 구글 계정 또는 깃허브 계정을 통해 로그인 할 수 있습니다. ',
-    image: '/images/login-image.jpg', // 여기에 적절한 이미지 경로 추가
+    image: '/images/login-image.png', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '상품 등록',
     id: 'product-registration',
     description:
       '사용자는 직관적인 UI를 통해 간편하게 상품을 등록하고, 사진 및 상세 정보를 추가할 수 있습니다.',
-    image: '/images/product-registration-image.jpg', // 여기에 적절한 이미지 경로 추가
+    image: '/images/product-registration-image.png', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '상품 상세페이지',
     id: 'product-detail',
     description:
       '사용자는 상품 상세페이지에서 자신이 등록한 상품이라면 수정, 삭제기능과 상품의 판매 상태를 설정할 수 있으며, 자신이 등록하지 않은 상품에 대해서는 찜하기 기능을 사용할 수 있습니다.',
-    image: '/images/product-detail-image.jpg', // 여기에 적절한 이미지 경로 추가
+    image: '/images/product-detail-image.png', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '댓글',
     id: 'comment',
     description:
       '사용자는 상품 상세페이지 하단의 댓글 영역에 댓글을 작성할 수 있으며, 자신이 등록한 댓글에 대해서는 수정과 삭제 기능을 이용할 수 있습니다. 또한 자신의 상품에 댓글을 단 경우라면 판매자 라고 표시됩니다. 해당 댓글 기능 통해 판매자와 구매자간의 소통이 가능하며 이를 바탕으로 거래를 진행할 수 있습니다.',
-    image: '/images/comment-image.jpg', // 여기에 적절한 이미지 경로 추가
+    image: '/images/comment-image.png', // 여기에 적절한 이미지 경로 추가
   },
   {
     title: '마이페이지',
     id: 'mypage',
     description:
       '사용자는 마이페이지에서 자신의 간단한 정보와 자신이 등록한 상품, 판매한 상품, 찜한 상품을 리스트형식으로 확인할 수 있습니다.',
-    image: '/images/mypage-image.jpg', // 여기에 적절한 이미지 경로 추가
+    image: '/images/mypage-image.png', // 여기에 적절한 이미지 경로 추가
+  },
+  {
+    title: '상품 목록',
+    id: 'product-list',
+    description:
+      '사용자는 상품 목록에서 해당 사이트에 등록된 상품을 살펴 볼 수 있으며, 상단의 필터 기능을 이용해 상품을 카테고리별, 가격순, 최신순으로 정렬할 수 있고 옆의 검색바를 이용하여 상품의 정확한 검색을 할 수 있습니다.',
+    image: '/images/product-list-image.png', // 여기에 적절한 이미지 경로 추가
+  },
+  {
+    title: '게시판',
+    id: 'board',
+    description:
+      '사용자는 사이드바의 게시판 버튼을 통해 게시판 페이지로 이동할 수 있으며, 해당 게시판에는 구매한 상품의 리뷰나 일상적인 이야기등 자신이 하고싶은 말을 자유롭게 적을 수 있습니다.',
+    image: '/images/board-image.png', // 여기에 적절한 이미지 경로 추가
+  },
+  {
+    title: '문의 하기',
+    id: 'contact',
+    description:
+      '사용자는 사이드바의 문의하기 버튼을 통해 문의하기 페이지로 이동할 수 있으며, 해당 입력 폼에 문의 사항이나 건의 사항을 입력하여 전달할 수 있습니다.',
+    image: '/images/contact-image.png', // 여기에 적절한 이미지 경로 추가
   },
 ]
 
@@ -68,6 +89,9 @@ export default function WikiPage() {
           </li>
           <li>
             <a href="#stacks">3. 사용된 기술</a>
+          </li>
+          <li>
+            <a href="#midterm">4. 중간고사 페이지</a>
           </li>
         </ul>
       </div>
