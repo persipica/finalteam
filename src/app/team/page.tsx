@@ -34,8 +34,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '임건희',
-    role: '사이드바 제작',
-    bio: '사이드바, ui 디자인 참여',
+    role: '사이드바 제작, 게시판 제작',
+    bio: '사이드바, ui 디자인 참여, 게시판 기능 제작',
     image: '/team2.png', // public 폴더 내 이미지
     email: 'kim@example.com',
     social: {
@@ -58,8 +58,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: '최경규',
-    role: '문의 페이지 제작',
-    bio: '문의 페이지제작, 프로젝트 아이디어 제시',
+    role: '문의 페이지 제작, 로고와 아이콘 제작',
+    bio: '문의 페이지제작, 프로젝트 아이디어 제시, 로고 및 아이콘등 제작',
     image: '/team4.png', // public 폴더 내 이미지
     email: 'jeong@example.com',
     social: {
@@ -112,7 +112,7 @@ export default function TeamPage() {
       <header className="text-center mb-12">
         <h1 className="text-4xl font-semibold text-blue-600">팀원 소개</h1>
         <p className="text-gray-700 mt-4 opacity-80">
-          우리 팀의 멋진 멤버들을 만나보세요!
+          프로젝트를 함께한 팀원들
         </p>
 
         {/* 검색 바 */}
@@ -135,9 +135,13 @@ export default function TeamPage() {
           >
             <option value="">전체 역할</option>
             <option value="프로젝트 전반 제작">프로젝트 전반 제작</option>
-            <option value="사이드바 제작">사이드바 제작</option>
+            <option value="사이드바 제작, 게시판 제작">
+              사이드바 제작, 게시판 제작
+            </option>
             <option value="팀원 소개 페이지 제작">팀원 소개 페이지 제작</option>
-            <option value="문의 페이지 제작">문의 페이지 제작</option>
+            <option value="문의 페이지 제작, 로고와 아이콘 제작">
+              문의 페이지 제작, 로고와 아이콘 제작
+            </option>
             <option value="프로젝트 디자인">프로젝트 디자인</option>
             <option value="??">??</option>
           </select>

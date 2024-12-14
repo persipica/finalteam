@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react'
 import UserTopicList from '@/components/UserTopicList'
 import FavoritesList from '@/components/FavoritesList'
+import SoldTopicLists from '@/components/SoldItemsList'
 
 export default function DashboardPage() {
   const { data: session, status } = useSession()
@@ -32,6 +33,11 @@ export default function DashboardPage() {
       <div className="mb-8">
         <h2 className="text-2xl font-semibold">내가 등록한 상품</h2>
         <UserTopicList />
+      </div>
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold">내가 판매한 상품</h2>
+        <SoldTopicLists />
       </div>
 
       {/* 즐겨찾기 목록 */}
