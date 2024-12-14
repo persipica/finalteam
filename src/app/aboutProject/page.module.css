@@ -1,52 +1,63 @@
-/* wikiPage.module.css */
 .page {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   margin: 20px;
 }
 
-.title {
-  font-size: 2em;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
+/* 목차 스타일 */
+.toc {
+  border: 1px solid #ddd;
+  padding: 10px;
   margin-bottom: 20px;
+  background: #f9f9f9;
 }
 
-.intro {
-  font-size: 1.2em;
-  margin-bottom: 20px;
+.toc h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  margin: 5px 0;
+}
+
+.toc a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+/* 섹션 스타일 */
+.section {
+  margin-top: 30px;
 }
 
 .sectionTitle {
   font-size: 1.5em;
-  border-bottom: 1px solid #ddd;
-  margin-top: 30px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 10px;
   padding-bottom: 5px;
 }
 
-.featureList {
-  list-style: none;
-  padding: 0;
-}
-
 .featureItem {
-  margin-bottom: 15px;
+  margin-top: 20px;
 }
 
 .featureTitle {
   font-size: 1.2em;
   font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .featureDescription {
   margin-left: 20px;
-}
-
-.techStack {
-  list-style: disc;
-  margin-left: 20px;
-}
-
-.description {
-  margin-top: 15px;
 }
