@@ -14,6 +14,7 @@ interface Favorite {
     createdAt: string
     image?: string
     views?: number
+    status: string
   }
 }
 
@@ -70,7 +71,7 @@ export default function FavoritesList({ userEmail }: { userEmail: string }) {
           {favorites.map((favorite) => (
             <div
               key={favorite._id}
-              className="bg-white border border-gray-300 rounded-md shadow hover:shadow-lg p-4 transition"
+              className="bg-white border border-gray-300 rounded-md shadow hover:shadow-lg p-4 transition relative"
             >
               <Link href={`/detailTopic/${favorite.topicId._id}`}>
                 {favorite.topicId.image && (
@@ -79,46 +80,41 @@ export default function FavoritesList({ userEmail }: { userEmail: string }) {
                     alt={favorite.topicId.title}
                     width={500}
                     height={300}
-                    className="object-cover w-full h-48"
+                    className={`object-cover w-full h-48 ${
+                      favorite.topicId.status === '판매완료' ? 'blur-sm' : ''
+                    }`}
                   />
                 )}
+                {favorite.topicId.status === '판매완료' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-semibold">
+                    판매 완료
+                  </div>
+                )}
                 <div className="p-4 flex justify-between">
-                  {/* 왼쪽 영역 (제목, 설명, 카테고리, 가격) */}
+                  {/* 상품 정보 */}
                   <div className="flex-1 pr-4">
-                    {' '}
-                    {/* 오른쪽 여백 추가 */}
                     <h3 className="text-lg font-semibold text-black">
                       {favorite.topicId.title}
-                    </h3>{' '}
-                    {/* 제목 글씨 크기: 중간글씨 */}
-                    <p
-                      className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
-                      style={{ maxWidth: '120px' }} // 상품 설명의 최대 너비 제한
-                    >
+                    </h3>
+                    <p className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
                       {favorite.topicId.description}
-                    </p>{' '}
-                    {/* 설명 글씨 크기: 중간글씨, 설명이 길면 ...으로 생략 */}
+                    </p>
                     <p className="text-sm text-gray-500 mt-2">
                       {favorite.topicId.category}
-                    </p>{' '}
-                    {/* 카테고리 글씨 크기: 작은글씨 */}
+                    </p>
                     <p className="mt-2 text-lg font-bold text-blue-600">
                       {favorite.topicId.price.toLocaleString()} 원
-                    </p>{' '}
-                    {/* 가격 글씨 크기: 중간글씨 */}
+                    </p>
                   </div>
-
-                  {/* 오른쪽 영역 (조회수, 등록시간) */}
+                  {/* 등록 시간 및 조회수 */}
                   <div className="flex flex-col items-end justify-between">
                     <p className="text-xs text-gray-500">
                       {getRelativeTime(favorite.topicId.createdAt)}
-                    </p>{' '}
-                    {/* 등록시간 글씨 크기: 작은글씨 */}
+                    </p>
                     <div className="text-xs text-gray-500 mt-2 flex items-center">
-                      <FaEye className="mr-1" /> {/* 눈 아이콘 */}
+                      <FaEye className="mr-1" />
                       {favorite.topicId.views}
-                    </div>{' '}
-                    {/* 조회수 아이콘 및 숫자 */}
+                    </div>
                   </div>
                 </div>
               </Link>

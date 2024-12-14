@@ -98,7 +98,7 @@ export default function SoldTopicLists() {
         {topics.map((topic: Topic) => (
           <div
             key={topic._id}
-            className="bg-white border border-gray-300 rounded-md shadow hover:shadow-lg p-4 transition"
+            className="bg-white border border-gray-300 rounded-md shadow hover:shadow-lg p-4 transition relative"
           >
             <Link href={`/detailTopic/${topic._id}`}>
               {topic.image && (
@@ -107,19 +107,23 @@ export default function SoldTopicLists() {
                   alt={topic.title}
                   width={500}
                   height={300}
-                  className="object-cover w-full h-48"
+                  className={`object-cover w-full h-48 ${
+                    topic.status === '판매완료' ? 'blur-sm' : ''
+                  }`}
                 />
               )}
+              {topic.status === '판매완료' && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-semibold">
+                  판매 완료
+                </div>
+              )}
               <div className="p-4 flex justify-between">
-                {/* 왼쪽 영역 (제목, 설명, 카테고리, 가격) */}
+                {/* 상품 정보 */}
                 <div className="flex-1 pr-4">
                   <h3 className="text-lg font-semibold text-black">
                     {topic.title}
                   </h3>
-                  <p
-                    className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
-                    style={{ maxWidth: '120px' }}
-                  >
+                  <p className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
                     {topic.description}
                   </p>
                   <p className="text-sm text-gray-500 mt-2">{topic.category}</p>
@@ -127,8 +131,7 @@ export default function SoldTopicLists() {
                     {topic.price.toLocaleString()} 원
                   </p>
                 </div>
-
-                {/* 오른쪽 영역 (조회수, 등록시간) */}
+                {/* 등록 시간 및 조회수 */}
                 <div className="flex flex-col items-end justify-between">
                   <p className="text-xs text-gray-500">
                     {getRelativeTime(topic.createdAt?.toString())}
