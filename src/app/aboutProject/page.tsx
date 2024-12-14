@@ -104,6 +104,13 @@ export default function WikiPage() {
           팔게 하기위해 제작되었습니다. 해당 사이트는 로그인, 상품등록, 찜하기,
           마이페이지등 다양한 기능을 제공하기 위해 여러 기술을 적용하였습니다.
         </p>
+
+        <div className={styles.videoWrapper}>
+          <video controls className={styles.projectVideo}>
+            <source src="/intro-video.mp4" type="video/mp4" />
+            해당 브라우저는 동영상을 지원하지 않습니다.
+          </video>
+        </div>
       </section>
 
       {/* 기능 섹션 */}
