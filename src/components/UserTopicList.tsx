@@ -121,7 +121,10 @@ export default function TopicLists() {
                   <h3 className="text-lg font-semibold text-black">
                     {topic.title}
                   </h3>
-                  <p className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                  <p
+                    className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
+                    style={{ maxWidth: '120px' }}
+                  >
                     {topic.description}
                   </p>
                   <p className="text-sm text-gray-500 mt-2">{topic.category}</p>

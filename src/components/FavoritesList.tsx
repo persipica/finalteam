@@ -96,7 +96,10 @@ export default function FavoritesList({ userEmail }: { userEmail: string }) {
                     <h3 className="text-lg font-semibold text-black">
                       {favorite.topicId.title}
                     </h3>
-                    <p className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                    <p
+                      className="text-base text-black mt-1 overflow-hidden text-ellipsis whitespace-nowrap"
+                      style={{ maxWidth: '120px' }}
+                    >
                       {favorite.topicId.description}
                     </p>
                     <p className="text-sm text-gray-500 mt-2">
