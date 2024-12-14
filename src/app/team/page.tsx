@@ -27,7 +27,7 @@ const teamMembers: TeamMember[] = [
     email: 'studyharder11@gmail.com',
     social: {
       github: 'https://github.com/persipica',
-      linkedin: 'https://www.linkedin.com/in/honggildong',
+      linkedin: 'https://finalterm-ebon.vercel.app/',
       instagram: 'https://www.instagram.com/honggildong',
     },
   },
