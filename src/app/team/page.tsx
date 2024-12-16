@@ -27,7 +27,7 @@ const teamMembers: TeamMember[] = [
     email: 'studyharder11@gmail.com',
     social: {
       github: 'https://github.com/persipica',
-      linkedin: 'https://finalterm-ebon.vercel.app/',
+      linkedin: 'https://finalterm-chi.vercel.app/',
       instagram: 'https://www.instagram.com/honggildong',
     },
   },
@@ -51,7 +51,7 @@ const teamMembers: TeamMember[] = [
     email: 'park@example.com',
     social: {
       github: 'https://github.com/parkdaihee',
-      linkedin: 'https://www.linkedin.com/in/parkyeonghee',
+      linkedin: 'https://far-nu.vercel.app/',
       instagram: 'https://www.instagram.com/parkyeonghee',
     },
   },
