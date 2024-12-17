@@ -39,7 +39,7 @@ const teamMembers: TeamMember[] = [
     email: 'kim@example.com',
     social: {
       github: 'https://github.com/limgunny',
-      linkedin: 'https://www.linkedin.com/in/kimcheolsu',
+      linkedin: 'https://portfolio-mu-gold-54.vercel.app/',
       instagram: 'https://www.instagram.com/kimcheolsu',
     },
   },
