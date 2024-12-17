@@ -75,7 +75,7 @@ const teamMembers: TeamMember[] = [
     email: 'lee@example.com',
     social: {
       github: 'https://github.com/BigWales98',
-      linkedin: 'https://www.linkedin.com/in/leesumin',
+      linkedin: 'https://next-js-portpolio2.vercel.app/',
       instagram: 'https://www.instagram.com/leesumin',
     },
   },
